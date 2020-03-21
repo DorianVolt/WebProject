@@ -29,7 +29,7 @@ app.get('/inscriptiion', (req, res) => {
 app.get('/profil', (req, res) => {
     res.render('profil');
 })
-app.post('/create', is_authenticated, (req, res) => {
+/*app.post('/create', is_authenticated, (req, res) => {
     var id = model.create(post_data_to_recipe(req));
     res.redirect('/profil/' + id);
 });
@@ -41,6 +41,6 @@ app.get('/games', (req, res) => {
 app.post('/create', is_authenticated, (req, res) => {
     var id = model.create(post_data_to_recipe(req));
     res.redirect('/games/' + id);
-});
+});*/
 
 app.listen(3000, () => console.log('listening on http://localhost:3000'));
