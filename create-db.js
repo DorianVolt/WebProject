@@ -1,24 +1,21 @@
 "use strict"
 
 const fs = require('fs');
-const Sqlite = require('better-sqlite3');
+const Sqlite3 = require('sqlite3');
 
-let db = new Sqlite('db.sqlite');
 const dbname = 'main.db'
 
-var load = function(filename) {
+let db = new Sqlite3.Database(dbname, err => {
+    if (err)
+        throw err
+    console.log('Database stated on ' + dbname)
 
-    db.prepare('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)').run();
-
-    var insert4 = db.prepare('INSERT INTO user VALUES (@id, @name, @password)');
-
-    insert4.run({ id: 2, name: "zobi", password: "13" });
-
-    db.prepare('SELECT * from user WHERE id=2', (err, name) => {
-        console.log(name.user);
+    //db.run('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)')
+    db.run('INSERT INTO user VALUES (@id, @name, @password)', [2, "zobi", "13"])
+    db.get('SELECT name FROM user WHERE id=2', (err, data) => {
+        if (err)
+            throw err;
+        console.log(data);
     })
+})
 
-
-}
-
-load('main.db');

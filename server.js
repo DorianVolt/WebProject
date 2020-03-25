@@ -32,10 +32,10 @@ app.get('/register', (req, res) => {
 //connection 
 app.post('/login', (req, res) => {
     var id = model.login(req.params.name, req.params.password);
-    if (id != "-1") {
-        res.session.user = true;
-        res.redirect('/profil');
-    } else res.redirect('/' + id);
+    if (id == "-1") {
+        res.session = true;
+        res.redirect('/profil' + id);
+    } else res.redirect('/');
 })
 
 // retourne la page profil
@@ -49,7 +49,7 @@ app.post('/profil', is_authenticated, (req, res) => {
 });
 
 function is_authenticated(req, res, next) {
-    if (req.session.user !== undefined) {
+    if (req.session !== undefined) {
         res.locals.authenticated = true;
         return next();
     }

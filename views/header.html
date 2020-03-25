@@ -6,41 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Gamemeet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png" rel="shortcut icon">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light justify-content-between">
+<body style="color: rgb(10, 10, 15);">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
         <img src="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png" style="height: 50px; width: 50px;">
-        <form method="POST" action="/login">
-            <form class="form-inline">
-                <ul class="navbar-nav mr-auto">
-                    <li>
-                        <div class="dropdown my-sm">
-                            <button class="btn btn-tranparent my-sm-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <form class="form-inline" method="POST" action="/login">
+            <ul class="navbar-nav mr-auto">
+                <li>
+                    <div class="dropdown my-sm">
+                        <button class="btn btn-tranparent my-sm-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <svg class="bi bi-person" width="2.7em" height="2.7em" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" >
                             <path fill-rule="evenodd" d="M15 16s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002zM5.022 15h9.956a.274.274 0 00.014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C13.516 12.68 12.289 12 10 12c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 00.022.004zm9.974.056v-.002zM10 9a2 2 0 100-4 2 2 0 000 4zm3-2a3 3 0 11-6 0 3 3 0 016 0z" clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: -200px; text-align: center;">
-                                <form class="px-4 py-3">
-                                    <div class="form-group" style="margin-left: 20px;">
-                                        <label for="exampleDropdownFormEmail1">Identifiant</label>
-                                        <input class="form-control" placeholder="Identifiant" name="name">
-                                    </div>
-                                    <div class="form-group" style="margin-left: 20px;">
-                                        <label for="exampleDropdownFormPassword1">Mot de passe</label>
-                                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Mot de passe" name="password">
-                                    </div>
-                                    <button type="submit" style="margin-top: 12px;" class="btn btn-primary">Connexion</button>
-                                </form>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/register">Tu es nouveau ? Inscrit-toi </a>
-                            </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: -200px; text-align: center;">
+                            <form class="px-4 py-3">
+                                <div class="form-group" style="margin-left: 20px;">
+                                    <label for="exampleDropdownFormEmail1">Identifiant</label>
+                                    <input class="form-control" placeholder="Identifiant" name="name">
+                                </div>
+                                <div class="form-group" style="margin-left: 20px;">
+                                    <label for="exampleDropdownFormPassword1">Mot de passe</label>
+                                    <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Mot de passe" name="password">
+                                </div>
+                                <button type="submit" style="margin-top: 12px;" class="btn btn-primary">Connexion</button>
+                            </form>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/register">Tu es nouveau ? Inscrit-toi </a>
                         </div>
-                    </li>
-                </ul>
-            </form>
+                    </div>
+                </li>
+            </ul>
         </form>
     </nav>
-    <div class="jumbotron mt-5 bg-muted" style="padding-top: 1rem;">
-        <main role="main" class="container bg-muted" style="margin-top: 3rem">
+    <div style="padding-top: 1rem;color: rgb(10, 10, 15);">
+        <main role="main" class="container" style="margin-top: 3rem;">
