@@ -2,6 +2,7 @@
 const Sqlite = require('../node_modules/better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
+
 //connection
 exports.login = function(name, password) {
 
@@ -15,7 +16,7 @@ exports.login = function(name, password) {
 //recuperer les infos d'un profil
 exports.printProfil = function(id) {
 
-    var taGrandMere = db.prepare('SELECT name FROM user WHERE id=?').get(id);
-    console.log(taGrandMere.name);
-    return taGrandMere.name;
+    var user = db.prepare('SELECT name FROM user WHERE id=?').get(id);
+    console.log(user.name);
+    return user.name;
 }

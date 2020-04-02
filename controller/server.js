@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(upload.array());
 app.use(cookieParser());
-app.use(session({ secret: "jaiunmegaZOB", resave: false, saveUninitialized: true }));
+app.use(session({ secret: "test", resave: false, saveUninitialized: true }));
 
 app.engine('html', mustache());
 app.set('view engine', 'html');
