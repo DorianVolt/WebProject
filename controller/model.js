@@ -17,6 +17,5 @@ exports.login = function(name, password) {
 exports.printProfil = function(id) {
 
     var user = db.prepare('SELECT name FROM user WHERE id=?').get(id);
-    console.log(user.name);
     return user.name;
 }

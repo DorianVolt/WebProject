@@ -42,7 +42,7 @@ app.post('/login', (req, res) => {
     req.session.user = id;
 
     if (req.session.user !== "-1") {
-        console.log("User:" +req.session.user + "authenticated !");
+        console.log("User:" +req.body.name +" id: "+req.session.user + " authenticated !");
         res.redirect('/profil');
     } else res.redirect('/');
 })
