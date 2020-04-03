@@ -38,32 +38,36 @@ app.get('/register', (req, res) => {
 
 //connection 
 app.post('/login', (req, res) => {
+    
     var id = model.login(req.body.name, req.body.password);
     req.session.user = id;
-
-    if (req.session.user !== "-1") {
-        console.log("User:" +req.body.name +" id: "+req.session.user + " authenticated !");
-        res.redirect('/profil');
-    } else res.redirect('/');
+    res.redirect('/profil');
+    
 })
 
 // retourne la page profil
-app.get('/profil', (req, res) => {
+app.get('/profil', is_authenticated,(req, res) => {
 
     var name = model.printProfil(req.session.user);
-    res.render('profil', { pseudo: name });
+    if (name== -1){
+        console.log('Authentication failed !')
+        res.redirect('/')
+    }
+    else{
+        res.render('profil', { pseudo: name });
+    }
+    
 })
 app.post('/profil', is_authenticated, (req, res) => {
-
     res.redirect('/profil');
 });
 
 function is_authenticated(req, res, next) {
-    if (req.session.user !== undefined) {
+    if (req.session.user != -1) {
         res.locals.authenticated = true;
         return next();
     }
-    res.status(401).send('Authentication required');
+    res.status(401).send('Authentication failed');
 }
 
 app.listen(3000, () => console.log('The server is running at http://localhost:3000'));

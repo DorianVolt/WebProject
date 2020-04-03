@@ -7,7 +7,7 @@ let db = new Sqlite('db.sqlite');
 exports.login = function(name, password) {
 
     var user = db.prepare('SELECT id FROM user WHERE name=? AND password=?').get(name, password);
-    if (user.id != undefined) {
+    if (user != undefined) {
         return user.id;
     }
     return -1;
@@ -17,5 +17,8 @@ exports.login = function(name, password) {
 exports.printProfil = function(id) {
 
     var user = db.prepare('SELECT name FROM user WHERE id=?').get(id);
-    return user.name;
+    if (user != undefined) {
+        return user.name;
+    }
+    return -1;
 }
