@@ -1,11 +1,15 @@
 "use strict"
+
 var mustache = require('../node_modules/mustache-express');
+
 var model = require('./model');
 
 var express = require('../node_modules/express');
 var app = express();
+
 var multer = require('../node_modules/multer')
 var upload = multer()
+
 var bodyParser = require('../node_modules/body-parser');
 var session = require('../node_modules/express-session');
 var cookieParser = require('../node_modules/cookie-parser');
@@ -17,10 +21,10 @@ app.use(cookieParser());
 app.use(session({ secret: "test", resave: false, saveUninitialized: true }));
 
 app.engine('html', mustache());
+
 app.set('view engine', 'html');
 app.set('views', '../views');
 
-var Users = [];
 
 /* Retourne la page principale */
 app.get('/', (req, res) => {
@@ -38,7 +42,7 @@ app.post('/login', (req, res) => {
     req.session.user = id;
 
     if (req.session.user !== "-1") {
-        console.log("login recup : " + req.session.user);
+        console.log("User:" +req.session.user + "authenticated !");
         res.redirect('/profil');
     } else res.redirect('/');
 })
@@ -46,9 +50,7 @@ app.post('/login', (req, res) => {
 // retourne la page profil
 app.get('/profil', (req, res) => {
 
-    console.log("recup id pour profil : " + req.session.user);
     var name = model.printProfil(req.session.user);
-    console.log("recup du nom : " + name);
     res.render('profil', { pseudo: name });
 })
 app.post('/profil', is_authenticated, (req, res) => {
@@ -64,4 +66,4 @@ function is_authenticated(req, res, next) {
     res.status(401).send('Authentication required');
 }
 
-app.listen(3000, () => console.log('listening on http://localhost:3000'));
+app.listen(3000, () => console.log('The server is running at http://localhost:3000'));

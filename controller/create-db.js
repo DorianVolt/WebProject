@@ -13,6 +13,7 @@ var load = function(filename) {
     var insert4 = db.prepare('INSERT INTO user VALUES (@id, @name, @password)');
 
     insert4.run({ id: 2, name: "zobi", password: "1" });
+    console.log("Database succesfully created !")
 }
 
 load('db.sqlite');
