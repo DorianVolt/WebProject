@@ -1,30 +1,21 @@
 {{> header}}
-<form href="/register">
-    <form class="form-inline">
-        <div class="form-group w-25">
-            <label for="inputUsername6" style="color: white;">Pseudo</label>
-            <input type="text" id="username" class="form-control mx-sm-3">
-        </div>
-    </form>
 
+<form class="form-group" method="POST" action="/registered">
 
-    <form class="form-inline">
-        <div class="form-group  mx-sm-3 mb-2">
-            <label for="inputUsername6" style="color: white;">Mot de passe</label>
-            <input type="password" id="password" class="form-control mx-sm-3">
-            <small id="passwordHelpInline" class="text-muted">
-            Must be 8-20 characters long.
-          </small>
-        </div>
-    </form>
+    <div class="form-group w-25">
+        <label style="color: white;">Pseudo</label>
+        <input name="username" class="form-control ">
+    </div>
 
-    <form class="form-inline">
-        <div class="form-group  mx-sm-3 mb-2">
-            <label for="inputUsername6" style="color: white;">Confirmation </label>
-            <input type="password" id="passwordConfirm" class="form-control mx-sm-3">
-        </div>
-    </form>
+    <div class="form-group w-25">
+        <label style="color: white;">Mot de passe</label>
+        <input type="password" name="password" class="form-control">
+    </div>
 
+    <div class="form-group w-25">
+        <label style="color: white;">Confirmation </label>
+        <input type="password" name="passwordConfirm" class="form-control">
+    </div>
 
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>

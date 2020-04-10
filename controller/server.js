@@ -26,6 +26,23 @@ app.set('view engine', 'html');
 app.set('views', '../views');
 
 
+// retourne la page d'inscription
+app.get('/register', (req, res) => {
+    res.render('register');
+})
+
+//inscription
+app.post('/registered', (req, res) => {
+    var MDP = model.testMDP(req.body.password, req.body.passwordConfirm);
+    var username = model.doubleName(req.body.username);
+    if (!MDP || !username) {
+        res.redirect('/register');
+    } else {
+        model.register(req.body.username, req.body.password);
+        res.render('validation');
+    }
+})
+
 /* Retourne la page principale */
 app.get('/', (req, res) => {
     res.render('index');
@@ -38,32 +55,33 @@ app.get('/register', (req, res) => {
 
 //connection 
 app.post('/login', (req, res) => {
-    
-    var id = model.login(req.body.name, req.body.password);
-    req.session.user = id;
-    res.redirect('/profil');
-    
+    if (res.locals.authenticated == true) {
+        res.redirect('/profil');
+    } else {
+        var id = model.login(req.body.name, req.body.password);
+        req.session.user = id;
+        res.redirect('/profil');
+    }
+
 })
 
 // retourne la page profil
-app.get('/profil', is_authenticated,(req, res) => {
-
+app.get('/profil', is_authenticated, (req, res) => {
+    console.log(req.session.user);
     var name = model.printProfil(req.session.user);
-    if (name== -1){
+    if (name == -1) {
         console.log('Authentication failed !')
         res.redirect('/')
-    }
-    else{
+    } else {
         res.render('profil', { pseudo: name });
     }
-    
 })
 app.post('/profil', is_authenticated, (req, res) => {
     res.redirect('/profil');
 });
 
 function is_authenticated(req, res, next) {
-    if (req.session.user != -1) {
+    if (req.session.user !== -1) {
         res.locals.authenticated = true;
         return next();
     }
