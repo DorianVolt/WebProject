@@ -3,6 +3,7 @@
 var mustache = require('../node_modules/mustache-express');
 
 var model = require('./model');
+var document = "../views"
 
 var express = require('../node_modules/express');
 var app = express();
@@ -26,6 +27,7 @@ app.set('view engine', 'html');
 app.set('views', '../views');
 
 
+
 // retourne la page d'inscription
 app.get('/register', (req, res) => {
     res.render('register');
@@ -44,7 +46,17 @@ app.post('/registered', (req, res) => {
 })
 
 /* Retourne la page principale */
+app.post('/', (req, res) => {
+    if (req.session.authenticated != true || req.session.authenticated != false) {
+        req.session.authenticated = false;
+        req.session.notauthenticated = true;
+        res.redirect('/');
+    } else res.redirect('/');
+})
+
+
 app.get('/', (req, res) => {
+
     res.render('index');
 });
 
@@ -76,13 +88,15 @@ app.get('/profil', is_authenticated, (req, res) => {
         res.render('profil', { pseudo: name });
     }
 })
-app.post('/profil', is_authenticated, (req, res) => {
+app.post('/profil', (req, res) => {
     res.redirect('/profil');
 });
 
+
 function is_authenticated(req, res, next) {
     if (req.session.user !== -1) {
-        res.locals.authenticated = true;
+        req.session.authenticated = true;
+        req.session.notauthenticated = false;
         return next();
     }
     res.status(401).send('Authentication failed');
