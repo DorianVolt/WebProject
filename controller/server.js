@@ -95,6 +95,10 @@ app.post('/profil', (req, res) => {
     res.redirect('/profil');
 });
 
+app.get('/logout',(req, res) =>{
+    req.session.destroy()
+    res.redirect('/')
+})
 
 function is_authenticated(req, res, next) {
     if (req.session.user !== -1) {
