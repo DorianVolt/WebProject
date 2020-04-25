@@ -73,6 +73,7 @@ app.post('/login', (req, res) => {
         res.redirect('/profil');
     } else {
         var id = model.login(req.body.name, req.body.password);
+        req.session.pseudo =req.body.name;
         req.session.user = id;
         res.redirect('/profil');
     }
