@@ -11,6 +11,8 @@ var app = express();
 var multer = require('../node_modules/multer')
 var upload = multer()
 
+var fetch = require("node-fetch");
+
 var bodyParser = require('../node_modules/body-parser');
 var session = require('../node_modules/express-session');
 var cookieParser = require('../node_modules/cookie-parser');
@@ -47,7 +49,7 @@ app.post('/registered', (req, res) => {
 
 /* Retourne la page principale */
 app.post('/', (req, res) => {
-    if (req.session.authenticated != true || req.session.authenticated != false) {
+    if (req.session.authenticated == false) {
         req.session.authenticated = false;
         req.session.notauthenticated = true;
         res.redirect('/');
@@ -57,7 +59,7 @@ app.post('/', (req, res) => {
 
 app.get('/', (req, res) => {
 
-    res.render('index');
+    res.render('index',req.session);
 });
 
 // retourne la mage d'inscription
@@ -101,5 +103,27 @@ function is_authenticated(req, res, next) {
     }
     res.status(401).send('Authentication failed');
 }
+
+//Request to the API ------------------------------------------------------------------------------------------------------------------------------------------
+
+//retourne la page de jeu
+app.get('/game', (req,res) =>{
+    res.render('game')
+})
+
+app.post('/game',async (req,res) =>{
+    const monVier = req.body.research;
+    await requestToApi (monVier)
+    res.redirect('/game')
+})
+
+async function requestToApi(gameName){
+    const apiUrl = "https://api.rawg.io/api/games?page_size=5&search=" + gameName;
+    const repsonse =  await fetch(apiUrl)
+    const json = await  repsonse.json()
+    console.log(json)
+    return json;
+}
+
 
 app.listen(3000, () => console.log('The server is running at http://localhost:3000'));
