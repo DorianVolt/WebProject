@@ -125,7 +125,7 @@ app.post('/game',async (req,res) =>{
 async function requestToApi(gameName){
     const apiUrl = "https://api.rawg.io/api/games?page_size=5&search=" + gameName;
     const repsonse =  await fetch(apiUrl)
-    const json = await  repsonse.json()
+    const json = await repsonse.json()
     console.log(json)
     return json;
 }
