@@ -134,7 +134,7 @@ async function requestToApi(gameName){
 function getName(page,i){
   let name =page.results[i].name
   console.log(name)
-  return name
+  //return name;
 
 }
 function getNames(page){
@@ -145,7 +145,7 @@ function getNames(page){
 function getImgSrc(page,i){
     let src = page.results[i].background_image
     console.log(src)
-    return src
+    //return src;
   
   }
 function getImgS(page){

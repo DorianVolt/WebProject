@@ -14,14 +14,14 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-light justify-content-between">
             <form action="/"> <button class="btn btn-block"> <img src="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png" href="/" style="height: 50px; width: 50px;"></img> </button></form>
 
+            <div class="form-inline">{{#authenticated}}
 
-            <h3>GameMeet</h3>{{#authenticated}}
-            <form class="form-inline" method="POST" action="/game">
-                Research:<input id="jeu"class="form-control" placeholder="Game Search" name="research"> </input>
-                <button id="submit" >Search</button>
-            </form>
-            {{/authenticated}}
-            <div class="form-inline">
+                <form class="form-inline" method="POST" action="/game">
+                    <input id="jeu" class="form-control" placeholder="Jeux" name="research"> </input>
+                    <button id="submit" class="btn btn-alert">Recherche</button>
+                </form>
+
+                {{/authenticated}}
                 <ul class="navbar-nav mr-auto">
                     <li>
                         <div class="dropdown my-sm">
