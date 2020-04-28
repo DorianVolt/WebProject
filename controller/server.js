@@ -82,7 +82,7 @@ app.post('/login', (req, res) => {
 
 // retourne la page profil
 app.get('/profil', is_authenticated, (req, res) => {
-    console.log(req.session.user);
+    //console.log(req.session.user);
     var name = model.printProfil(req.session.user);
     if (name == -1) {
         console.log('Authentication failed !')
@@ -116,19 +116,41 @@ app.get('/game', (req,res) =>{
     res.render('game')
 })
 
+var jsonNext;
+
 app.post('/game',async (req,res) =>{
-    const monVier = req.body.research;
-    var result = await requestToApi (monVier)
+    const resultat = req.body.research;
+    var result = await requestToApi (resultat)
+    if(result.count == 0){
+        res.redirect('/')
+    }
+    else{
+    var nextP = result.next
+    var responseNext = await fetch(nextP)
+    jsonNext = await responseNext.json()
     result.authenticated = req.session.authenticated
-    res.render('../views/game',result)
+    res.render('../views/game',result)}
 })
 
 async function requestToApi(gameName){
-    const apiUrl = "https://api.rawg.io/api/games?page_size=5&search=" + gameName;
-    const repsonse =  await fetch(apiUrl)
-    const json = await repsonse.json();
+    var apiUrl = "https://api.rawg.io/api/games?page_size=10&search=" + gameName;
+    var repsonse =  await fetch(apiUrl)
+    var json = await repsonse.json();
     return json;
+    
 }
+
+app.post('/next',async (req,res) =>{
+    if(jsonNext.next !==null){
+        res.render('../views/game',jsonNext)
+        var nextP = jsonNext.next
+        var responseNext = await fetch(nextP)
+        jsonNext = await responseNext.json()
+    }
+    else{
+        res.render('../views/game',jsonNext)
+    }
+})
 
 
 

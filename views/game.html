@@ -1,5 +1,6 @@
 {{> header}}
-<p>ICI LES RESULTAT DES JEUX</p>
+<h1>Jeu(x) trouvé(s): {{results.length}}</h1>
+
 
 {{#results}}
 <div class="row row-cols-1 row-cols-sm-2">
@@ -15,5 +16,9 @@
     </div>
 </div>
 
-{{/results}} 
+{{/results}}
+
+<form method="POST" action="/next">
+    <input type="submit" value="Prochaine page" >
+    </form>
 {{> footer}}
