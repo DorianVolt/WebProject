@@ -118,40 +118,18 @@ app.get('/game', (req,res) =>{
 
 app.post('/game',async (req,res) =>{
     const monVier = req.body.research;
-    await requestToApi (monVier)
-    res.redirect('/game')
+    var result = await requestToApi (monVier)
+    result.authenticated = req.session.authenticated
+    res.render('../views/game',result)
 })
 
 async function requestToApi(gameName){
     const apiUrl = "https://api.rawg.io/api/games?page_size=5&search=" + gameName;
     const repsonse =  await fetch(apiUrl)
     const json = await repsonse.json();
-    getNames(json)
-    getImgS(json)
     return json;
 }
 
-function getName(page,i){
-  let name =page.results[i].name
-  console.log(name)
-  //return name;
-
-}
-function getNames(page){
-    for(let i = 0;i<page.results.length;i++)
-        getName(page,i)
-  }
-
-function getImgSrc(page,i){
-    let src = page.results[i].background_image
-    console.log(src)
-    //return src;
-  
-  }
-function getImgS(page){
-    for(let i = 0;i<page.results.length;i++)
-        getImgSrc(page,i)
-    }
 
 
 app.listen(3000, () => console.log('The server is running at http://localhost:3000'));
