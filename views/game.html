@@ -1,21 +1,36 @@
 {{> header}}
-<h1>Jeu(x) trouvé(s): {{results.length}}</h1>
+<h1>Jeu(x) trouvé(s): {{count}}</h1>
+<br>
+<br>
+<br>
 
 
 {{#results}}
 <div class="row row-cols-1 row-cols-sm-2">
     <div class="col">
         <h1>{{name}}</h1>
-        <p>
-            {{#authenticated}}
-            <button class="btn btn-primary" >Ajouter à ma liste</button>{{/authenticated}}
-        </p>
+        
+    </div>
+    <div class="col">
+        <h2>Plateformes:</h2>
+        {{#platforms}}
+        <h3>{{platform.name}}</h3>
+        {{/platforms}}
+        
+    </div>
+    <div class="col">
+        <h2>{{rating}}/5</h2>
     </div>
     <div class="col">
         <img src="{{background_image}}" class="img-fluid" alt="Responsive image">
     </div>
+    <p>
+            {{#authenticated}}
+            <button class="btn btn-primary" >Ajouter à ma liste</button>{{/authenticated}}
+        </p>
 </div>
-
+<br>
+<br>
 {{/results}}
 
 <form method="POST" action="/next">
