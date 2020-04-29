@@ -3,7 +3,6 @@
 var mustache = require('../node_modules/mustache-express');
 
 var model = require('./model');
-var document = "../views"
 
 var express = require('../node_modules/express');
 var app = express();
@@ -28,14 +27,7 @@ app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', '../views');
 
-
-
-// retourne la page d'inscription
-app.get('/register', (req, res) => {
-    res.render('register');
-})
-
-//inscription
+//Inscription
 app.post('/registered', (req, res) => {
     var MDP = model.testMDP(req.body.password, req.body.passwordConfirm);
     var username = model.doubleName(req.body.username);
@@ -47,7 +39,7 @@ app.post('/registered', (req, res) => {
     }
 })
 
-/* Retourne la page principale */
+//Page principale 
 app.post('/', (req, res) => {
     if (req.session.authenticated == false) {
         req.session.authenticated = false;
@@ -58,31 +50,29 @@ app.post('/', (req, res) => {
 
 
 app.get('/', (req, res) => {
-
-    res.render('index',req.session);
+    res.render('index', req.session);
 });
 
-// retourne la mage d'inscription
+//Page d'inscription
 app.get('/register', (req, res) => {
     res.render('register');
 })
 
-//connection 
+//Connexion
 app.post('/login', (req, res) => {
     if (res.locals.authenticated == true) {
         res.redirect('/profil');
     } else {
         var id = model.login(req.body.name, req.body.password);
-        req.session.pseudo =req.body.name;
+        req.session.pseudo = req.body.name;
         req.session.user = id;
         res.redirect('/profil');
     }
 
 })
 
-// retourne la page profil
+//Page profil
 app.get('/profil', is_authenticated, (req, res) => {
-    //console.log(req.session.user);
     var name = model.printProfil(req.session.user);
     if (name == -1) {
         console.log('Authentication failed !')
@@ -95,11 +85,13 @@ app.post('/profil', (req, res) => {
     res.redirect('/profil');
 });
 
-app.get('/logout',(req, res) =>{
+//Déconnexion
+app.get('/logout', (req, res) => {
     req.session.destroy()
     res.redirect('/')
 })
 
+//Middleware d'authentification
 function is_authenticated(req, res, next) {
     if (req.session.user !== -1) {
         req.session.authenticated = true;
@@ -109,49 +101,48 @@ function is_authenticated(req, res, next) {
     res.status(401).send('Authentication failed');
 }
 
-//Request to the API ------------------------------------------------------------------------------------------------------------------------------------------
+//Requête à l'API ------------------------------------------------------------------------------------------------------------------------------------------
 
-//retourne la page de jeu
-app.get('/game', (req,res) =>{
-    res.render('game')
-})
+var page;
+var resultat;
 
-var jsonNext;
-
-app.post('/game',async (req,res) =>{
-    const resultat = req.body.research;
-    var result = await requestToApi (resultat)
-    if(result.count == 0){
+//Page de jeu (recherche)
+app.post('/game', async (req, res) => {
+    page = 1
+    resultat = req.body.research;
+    req.params.research = resultat
+    var result = await requestToApi(page, resultat)
+    if (result.count == 0) {
         res.redirect('/')
     }
-    else{
-    var nextP = result.next
-    var responseNext = await fetch(nextP)
-    jsonNext = await responseNext.json()
-    result.authenticated = req.session.authenticated
-    res.render('../views/game',result)}
-})
-
-async function requestToApi(gameName){
-    var apiUrl = "https://api.rawg.io/api/games?page_size=10&search=" + gameName;
-    var repsonse =  await fetch(apiUrl)
-    var json = await repsonse.json();
-    return json;
-    
-}
-
-app.post('/next',async (req,res) =>{
-    if(jsonNext.next !==null){
-        res.render('../views/game',jsonNext)
-        var nextP = jsonNext.next
-        var responseNext = await fetch(nextP)
-        jsonNext = await responseNext.json()
-    }
-    else{
-        res.render('../views/game',jsonNext)
+    else {
+        result.authenticated = req.session.authenticated
+        res.render('../views/game', result)
     }
 })
 
+//Page de jeu 
+app.get('/game', async (req, res) => {
+    var result = await requestToApi(page, resultat)
+    if (result.count == 0 || page < 1) {
+        res.redirect('/')
+    }
+    else {
+        result.authenticated = req.session.authenticated
+        res.render('../views/game', result)
+    }
+})
 
+//Prochaine page
+app.get('/next', async (req, res) => {
+    page++
+    res.redirect('/game')
+})
+
+//Page précedente
+app.get('/previous', async (req, res) => {
+    page--
+    res.redirect('/game')
+})
 
 app.listen(3000, () => console.log('The server is running at http://localhost:3000'));
