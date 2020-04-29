@@ -52,14 +52,14 @@ exports.requestToApi = async function (page, gameName) {
 }
 
 //Ajoute un jeu à la liste d'un utilisateur
-exports.addGame = function(gameId,gameName,uid){
-    db.prepare('INSERT INTO game VALUES (@id,@name,@userId)').run({ id: gameId, name: gameName,userId :uid });
+exports.addGame = function (gameId, gameName, uid) {
+    db.prepare('INSERT INTO game VALUES (@id,@name,@userId)').run({ id: gameId, name: gameName, userId: uid });
 }
 
 //Retourne tout les jeux d'un utilisateur
-exports.getGamesById= function (userId){
+exports.getGamesById = function (userId) {
     var games = db.prepare('Select name from game where userId=?').all(userId)
-    console.log(games)
     return games
 
 }
+

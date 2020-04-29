@@ -71,12 +71,17 @@ app.post('/login', (req, res) => {
 
 //Page profil
 app.get('/profil', is_authenticated, (req, res) => {
+    
     var name = model.printProfil(req.session.user);
     if (name == -1) {
         console.log('Authentication failed !')
         res.redirect('/')
     } else {
-        res.render('profil', { pseudo: name });
+        var games = model.getGamesById(req.session.user)
+        // for (let i =0;i<games.length;i++) {
+        //     console.log(games[i].name)
+        // }
+        res.render('profil', { pseudo: name ,games});
     }
 })
 app.post('/profil', (req, res) => {
@@ -143,12 +148,9 @@ app.get('/previous', async (req, res) => {
     res.redirect('/game')
 })
 
-
+//Ajout d'un jeu dans la liste de l'utilisateur
 app.post('/ajout/:id/:name',  (req, res) => {
-    console.log("ID: "+req.params.id)
-    console.log("Game: "+req.params.name)
-    model.addGame(req.params.id,req.params.name,req.session.id)
-    model.getGamesById(req.session.id)
+    model.addGame(req.params.id,req.params.name,req.session.user)
     res.redirect('/profil')
 })
 

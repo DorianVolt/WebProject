@@ -1,10 +1,14 @@
 {{> header}}
 <div class="jumbotron" style="text-align:center;">
     <div class="rounded rounded-circle bg-dark" style="height: 140px; width: 140px; text-align: center; margin:0 auto">
-        <a>ajouter</a>
+        <a>Ajouter</a>
     </div>
 
     <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
+    <h2>Listes de jeux:</h2>
+    {{#games}}
+    <h3>-Nom {{name}}</h3>
+    {{/games}}
 </div>
 
 
