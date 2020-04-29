@@ -11,6 +11,10 @@ var load = function (filename) {
 
     db.prepare('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)').run();
 
+    db.prepare('DROP TABLE IF EXISTS game').run();
+
+    db.prepare('CREATE TABLE game (id INTEGER, name TEXT, userId INTEGER)').run();
+
     var insert4 = db.prepare('INSERT INTO user VALUES (@id, @name, @password)');
 
     insert4.run({ id: 2, name: "zobi", password: "1" });

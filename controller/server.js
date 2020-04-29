@@ -10,8 +10,6 @@ var app = express();
 var multer = require('../node_modules/multer')
 var upload = multer()
 
-var fetch = require("node-fetch");
-
 var bodyParser = require('../node_modules/body-parser');
 var session = require('../node_modules/express-session');
 var cookieParser = require('../node_modules/cookie-parser');
@@ -28,7 +26,7 @@ app.set('view engine', 'html');
 app.set('views', '../views');
 
 //Inscription
-app.post('/registered', (req, res) => {
+app.post('/register', (req, res) => {
     var MDP = model.testMDP(req.body.password, req.body.passwordConfirm);
     var username = model.doubleName(req.body.username);
     if (!MDP || !username) {
@@ -111,7 +109,7 @@ app.post('/game', async (req, res) => {
     page = 1
     resultat = req.body.research;
     req.params.research = resultat
-    var result = await requestToApi(page, resultat)
+    var result = await model.requestToApi(page, resultat)
     if (result.count == 0) {
         res.redirect('/')
     }
@@ -123,7 +121,7 @@ app.post('/game', async (req, res) => {
 
 //Page de jeu 
 app.get('/game', async (req, res) => {
-    var result = await requestToApi(page, resultat)
+    var result = await model.requestToApi(page, resultat)
     if (result.count == 0 || page < 1) {
         res.redirect('/')
     }
@@ -145,4 +143,13 @@ app.get('/previous', async (req, res) => {
     res.redirect('/game')
 })
 
-app.listen(3000, () => console.log('The server is running at http://localhost:3000'));
+
+app.post('/ajout/:id/:name',  (req, res) => {
+    console.log("ID: "+req.params.id)
+    console.log("Game: "+req.params.name)
+    model.addGame(req.params.id,req.params.name,req.session.id)
+    model.getGamesById(req.session.id)
+    res.redirect('/profil')
+})
+
+app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

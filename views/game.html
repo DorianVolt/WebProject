@@ -26,7 +26,10 @@
     </div>
     <p>
         {{#authenticated}}
-        <button class="btn btn-primary">Ajouter à ma liste</button>{{/authenticated}}
+        <form method="POST" action="/ajout/:{{id}}/:{{name}}">
+            <input type="submit" value="Ajouter ce jeu à ma liste">
+        </form>
+        {{/authenticated}}
     </p>
 </div>
 <br>

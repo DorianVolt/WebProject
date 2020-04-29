@@ -2,10 +2,14 @@
 const Sqlite = require('../node_modules/better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
+var fetch = require("node-fetch");
 
 //Connexion
 exports.login = function (name, password) {
     var user = db.prepare('SELECT id FROM user WHERE name=? AND password=?').get(name, password);
+    if (user == undefined) {
+        return -1;
+    }
     if (user.id != undefined) {
         return user.id;
     }
@@ -27,18 +31,16 @@ exports.printProfil = function (id) {
 
 //Check MDP(pas identique)
 exports.testMDP = function (MDP1, MDP2) {
-    if (MDP1 == "" || MDP2 == "" || MDP1 !== MDP2) {
+    if (MDP1 == "" || MDP2 == "" || MDP1 != MDP2) {
         return false;
     } else return true;
 }
 
 //Check identifiant
 exports.doubleName = function (name) {
-    var double = 0;
+    var double;
     double = db.prepare('SELECT id FROM user WHERE name=?').get(name);
-    if (double != 0) {
-        return false;
-    } else return true;
+    return double == undefined
 }
 
 //Requête à l'API
@@ -47,4 +49,17 @@ exports.requestToApi = async function (page, gameName) {
     var repsonse = await fetch(apiUrl)
     var json = await repsonse.json();
     return json;
+}
+
+//Ajoute un jeu à la liste d'un utilisateur
+exports.addGame = function(gameId,gameName,uid){
+    db.prepare('INSERT INTO game VALUES (@id,@name,@userId)').run({ id: gameId, name: gameName,userId :uid });
+}
+
+//Retourne tout les jeux d'un utilisateur
+exports.getGamesById= function (userId){
+    var games = db.prepare('Select name from game where userId=?').all(userId)
+    console.log(games)
+    return games
+
 }
