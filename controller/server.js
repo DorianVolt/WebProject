@@ -149,8 +149,12 @@ app.get('/previous', async (req, res) => {
 })
 
 //Ajout d'un jeu dans la liste de l'utilisateur
-app.post('/ajout/:id/:name',  (req, res) => {
+app.post('/ajout/:id/:name',is_authenticated, (req, res) => {
     model.addGame(req.params.id,req.params.name,req.session.user)
+})
+
+app.post('/delete/:name',is_authenticated,  (req, res) => {
+    model.deleteGameById(req.params.name,req.session.user)
     res.redirect('/profil')
 })
 

@@ -6,23 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Gamemeet</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link href="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png"
-        rel="shortcut icon">
+    <link href="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png" rel="shortcut icon">
 </head>
 
 <body>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
-        crossorigin="anonymous "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
-        crossorigin="anonymous "></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
-        crossorigin="anonymous "></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q " crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl " crossorigin="anonymous "></script>
 
     <div class="d-block bg-dark h-100">
-        <nav class="navbar navbar-expand-md navbar-dark bg-light justify-content-between">
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-light justify-content-between shadow-lg fixed-top sticky-top w-100">
             <form action="/"> <button class="btn btn-block"> <img
                         src="https://cdn.discordapp.com/attachments/685189484098224138/691605580879757353/GM.png"
                         href="/" style="height: 50px; width: 50px;"></img> </button></form>
@@ -31,15 +25,12 @@
 
                 <form class="form-inline" method="POST" action="/game">
                     <input id="jeu" class="form-control" placeholder="Jeux" name="research"> </input>
-                    <button id="submit" class="btn btn-alert">Recherche</button>
+                    <button id="submit" class="btn btn-alert">Rechercher</button>
                 </form>
-
-
                 <ul class="navbar-nav mr-auto">
                     <li>
                         <div class="dropdown my-sm">
-                            <button class="btn btn-tranparent my-sm-0" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="true">
+                            <button class="btn btn-tranparent my-sm-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 <svg class="bi bi-person" width="2.7em" height="2.7em" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -47,21 +38,23 @@
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </button> {{#authenticated}}
-                            <div class="dropdown-menu bg-light" id="disconnected" aria-labelledby="dropdownMenuButton"
-                                style="margin-left: -200px; text-align: center;">
+                            <div class="dropdown-menu bg-light" id="disconnected" aria-labelledby="dropdownMenuButton" style="margin-left: -200px; text-align: center;">
+
+                                <h4 class="text-danger">{{pseudo}}</h4>
+
+
+                                <form class="px-4 py-3" action="/profil">
+                                    <button type="submit" class="btn btn-info">Profil
+                                    </button>
+                                </form>
+
                                 <form class="px-4 py-3" action="/logout">
-                                    <div class="form-group" style="margin-left: 20px;">
-                                        {{pseudo}}
-                                    </div>
-                                    <button type="submit" style="margin-top: 12px;"
-                                        class="btn btn-primary">Déconnexion</button>
+                                    <button type="submit" style="margin-top: 12px;" class="btn btn-primary">Déconnexion</button>
                                 </form>
                             </div>
                             {{/authenticated}} {{^authenticated}}
                             <form class="form-inline" method="POST" action="/login">
-                                <div class="dropdown-menu bg-light" id="disconnected"
-                                    aria-labelledby="dropdownMenuButton"
-                                    style="margin-left: -200px; text-align: center;">
+                                <div class="dropdown-menu bg-light" id="disconnected" aria-labelledby="dropdownMenuButton" style="margin-left: -200px; text-align: center;">
                                     <form class="px-4 py-3">
                                         <div class="form-group" style="margin-left: 20px;">
                                             <label for="exampleDropdownFormEmail1">Identifiant</label>
@@ -69,12 +62,9 @@
                                         </div>
                                         <div class="form-group" style="margin-left: 20px;">
                                             <label for="exampleDropdownFormPassword1">Mot de passe</label>
-                                            <input type="password" class="form-control"
-                                                id="exampleDropdownFormPassword1" placeholder="Mot de passe"
-                                                name="password">
+                                            <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Mot de passe" name="password">
                                         </div>
-                                        <button type="submit" style="margin-top: 12px;"
-                                            class="btn btn-primary">Connexion</button>
+                                        <button type="submit" style="margin-top: 12px;" class="btn btn-primary">Connexion</button>
                                     </form>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/register">Tu es nouveau ? Inscris-toi </a>

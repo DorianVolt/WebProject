@@ -1,45 +1,48 @@
 {{> header}}
-<h1>Jeu(x) trouvé(s): {{count}}</h1>
+<div form="text-inline">
+    <h3 class="text-white">Jeu(x) trouvé(s):
+        <h3 class="text-light">{{count}}</h3>
+    </h3>
+</div>
 <br>
 <br>
-<br>
-
-
-{{#results}}
+<br> {{#results}}
 <div class="row row-cols-1 row-cols-sm-2">
     <div class="col">
-        <h1>{{name}}</h1>
-
-    </div>
-    <div class="col">
-        <h2>Plateformes:</h2>
-        {{#platforms}}
-        <h3>{{platform.name}}</h3>
-        {{/platforms}}
-
-    </div>
-    <div class="col">
-        <h2>{{rating}}/5</h2>
+        <h1 class="text-danger">{{name}}</h1>
+        <h5 class="text-secondary">Note : {{rating}}/5</h5>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Plateformes
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item"> {{#platforms}}
+                <h5>{{platform.name}}</h5>
+                {{/platforms}}</a>
+            </div>
+        </div>
+        <p>
+            {{#authenticated}}
+            <form method="POST" action="/ajout/:{{id}}/:{{name}}">
+                <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
+            </form>
+            {{/authenticated}}
+        </p>
     </div>
     <div class="col">
         <img src="{{background_image}}" class="img-fluid" alt="Responsive image">
     </div>
-    <p>
-        {{#authenticated}}
-        <form method="POST" action="/ajout/:{{id}}/:{{name}}">
-            <input type="submit" value="Ajouter ce jeu à ma liste">
-        </form>
-        {{/authenticated}}
-    </p>
 </div>
 <br>
-<br>
-{{/results}}
+<br> {{/results}}
 
-<form method="GET" action="/next">
-    <input type="submit" value="Prochaine page">
-</form>
-<form method="GET" action="/previous">
-    <input type="submit" value="Page précedente">
-</form>
+<div class="form-inline justify-content-between">
+    <form class="form-inline" method="GET" action="/previous">
+        <input class="btn btn-light" type="submit" value="Page précedente">
+    </form>
+    <form class="form-inline" method="GET" action="/next">
+        <input class="btn btn-light" type="submit" value="Page suivante">
+
+    </form>
+</div>
 {{> footer}}

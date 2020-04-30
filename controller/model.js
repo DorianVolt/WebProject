@@ -53,7 +53,8 @@ exports.requestToApi = async function (page, gameName) {
 
 //Ajoute un jeu à la liste d'un utilisateur
 exports.addGame = function (gameId, gameName, uid) {
-    db.prepare('INSERT INTO game VALUES (@id,@name,@userId)').run({ id: gameId, name: gameName, userId: uid });
+    var game = gameName.slice(1)
+    db.prepare('INSERT INTO game VALUES (@id,@name,@userId)').run({ id: gameId, name: game, userId: uid });
 }
 
 //Retourne tout les jeux d'un utilisateur
@@ -63,3 +64,8 @@ exports.getGamesById = function (userId) {
 
 }
 
+//Supprime un jeu de la liste de l'utilisateur
+exports.deleteGameById  = function(gameName,userId){
+    var game = gameName.slice(1)
+    db.prepare('DELETE from game WHERE userId=?AND name=?').run(userId,game);
+}
