@@ -5,6 +5,7 @@ const Sqlite = require('better-sqlite3');
 
 let db = new Sqlite('db.sqlite');
 
+//Recréé une base données de zéro (efface tout les utilsateurs sauvegardés)
 var load = function (filename) {
 
     db.prepare('DROP TABLE IF EXISTS user').run();

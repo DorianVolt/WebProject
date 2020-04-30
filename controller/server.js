@@ -127,13 +127,10 @@ app.post('/game', async (req, res) => {
         result.authenticated = req.session.authenticated
         result.hasNext = hasNext
         result.hasPrev = hasPrev
-        result.pseudo = model.printProfil(req.session.user);
+        if (req.session.authenticated) { result.pseudo = model.printProfil(req.session.user); }
         res.render('../views/game', result)
     }
 })
-
-
-
 
 //Page de jeu 
 app.get('/game', async (req, res) => {
@@ -158,7 +155,8 @@ app.get('/game', async (req, res) => {
         result.authenticated = req.session.authenticated
         result.hasNext = hasNext
         result.hasPrev = hasPrev
-        result.pseudo = model.printProfil(req.session.user);
+        //Transmet le pseudo au render uniquement si l'utilisateur est connecté
+        if (req.session.authenticated) { result.pseudo = model.printProfil(req.session.user); }
         res.render('../views/game', result)
     }
 })
