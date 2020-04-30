@@ -12,13 +12,14 @@
         <h1 class="text-danger">{{name}}</h1>
         <h5 class="text-secondary">Note : {{rating}}/5</h5>
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Plateformes
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Plateformes
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item"> {{#platforms}}
-                <h5>{{platform.name}}</h5>
-                {{/platforms}}</a>
+                    <h5>{{platform.name}}</h5>
+                    {{/platforms}}</a>
             </div>
         </div>
         <p>

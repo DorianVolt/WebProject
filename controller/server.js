@@ -71,7 +71,7 @@ app.post('/login', (req, res) => {
 
 //Page profil
 app.get('/profil', is_authenticated, (req, res) => {
-    
+
     var name = model.printProfil(req.session.user);
     if (name == -1) {
         console.log('Authentication failed !')
@@ -81,7 +81,7 @@ app.get('/profil', is_authenticated, (req, res) => {
         // for (let i =0;i<games.length;i++) {
         //     console.log(games[i].name)
         // }
-        res.render('profil', { pseudo: name ,games});
+        res.render('profil', { pseudo: name, games });
     }
 })
 app.post('/profil', (req, res) => {
@@ -149,12 +149,12 @@ app.get('/previous', async (req, res) => {
 })
 
 //Ajout d'un jeu dans la liste de l'utilisateur
-app.post('/ajout/:id/:name',is_authenticated, (req, res) => {
-    model.addGame(req.params.id,req.params.name,req.session.user)
+app.post('/ajout/:id/:name', is_authenticated, (req, res) => {
+    model.addGame(req.params.id, req.params.name, req.session.user)
 })
 
-app.post('/delete/:name',is_authenticated,  (req, res) => {
-    model.deleteGameById(req.params.name,req.session.user)
+app.post('/delete/:name', is_authenticated, (req, res) => {
+    model.deleteGameById(req.params.name, req.session.user)
     res.redirect('/profil')
 })
 
