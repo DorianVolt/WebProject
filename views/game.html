@@ -38,12 +38,15 @@
 <br> {{/results}}
 
 <div class="form-inline justify-content-between">
+    {{#hasPrev}}
     <form class="form-inline" method="GET" action="/previous">
         <input class="btn btn-light" type="submit" value="Page précedente">
     </form>
+    {{/hasPrev}}
+    {{#hasNext}}
     <form class="form-inline" method="GET" action="/next">
         <input class="btn btn-light" type="submit" value="Page suivante">
-
     </form>
+    {{/hasNext}}
 </div>
 {{> footer}}

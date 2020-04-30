@@ -53,7 +53,7 @@ exports.requestToApi = async function (page, gameName) {
 exports.addGame = function (gameId, gameName, uid) {
     //Supprime le charactère ":" du nom car il empêche l'insertion 
     var game = gameName.slice(1)
-    db.prepare('INSERT INTO  game VALUES (@id,@name,@userId))').run({ id: gameId, name: game, userId: uid });
+    db.prepare('INSERT INTO  game VALUES (@id,@name,@userId)').run({ id: gameId, name: game, userId: uid });
 }
 
 //Retourne tout les jeux d'un utilisateur

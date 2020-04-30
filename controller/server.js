@@ -48,7 +48,8 @@ app.post('/', (req, res) => {
 
 
 app.get('/', (req, res) => {
-    res.render('index', req.session);
+    var session = req.session
+    res.render('index', session);
 });
 
 //Page d'inscription
@@ -78,10 +79,8 @@ app.get('/profil', is_authenticated, (req, res) => {
         res.redirect('/')
     } else {
         var games = model.getGamesById(req.session.user)
-        // for (let i =0;i<games.length;i++) {
-        //     console.log(games[i].name)
-        // }
-        res.render('profil', { pseudo: name, games });
+        var authenticated = req.session.authenticated
+        res.render('profil',{ pseudo: name, games ,authenticated});
     }
 })
 app.post('/profil', (req, res) => {
@@ -108,6 +107,8 @@ function is_authenticated(req, res, next) {
 
 var page;
 var resultat;
+var hasNext = true;
+var hasPrev = false
 
 //Page de jeu (recherche)
 app.post('/game', async (req, res) => {
@@ -120,19 +121,41 @@ app.post('/game', async (req, res) => {
     }
     else {
         result.authenticated = req.session.authenticated
+        result.hasNext =hasNext
+        result.hasPrev =hasPrev
+        result.pseudo =  model.printProfil(req.session.user);
         res.render('../views/game', result)
     }
 })
 
+
+
+
 //Page de jeu 
 app.get('/game', async (req, res) => {
     var result = await model.requestToApi(page, resultat)
-    if (result.count == 0 || page < 1) {
+    if (result.count == 0) {
         res.redirect('/')
     }
     else {
+        //Navigation des pages
+        if (page == 1) {
+            hasPrev = false
+        }
+        if (page != 1) {
+            hasPrev = true
+        }
+        if (result.count <= page * 10) {
+            hasNext = false
+        }
+        if (page * 10 < result.count) {
+            hasNext = true
+        }
         result.authenticated = req.session.authenticated
-        res.render('../views/game', result)
+        result.hasNext =hasNext
+        result.hasPrev =hasPrev
+        result.pseudo =  model.printProfil(req.session.user);
+        res.render('../views/game', result )
     }
 })
 
@@ -153,9 +176,10 @@ app.post('/ajout/:id/:name', is_authenticated, (req, res) => {
     model.addGame(req.params.id, req.params.name, req.session.user)
 })
 
+//Delete un jeu de la liste
 app.post('/delete/:name', is_authenticated, (req, res) => {
     model.deleteGameById(req.params.name, req.session.user)
     res.redirect('/profil')
 })
 
-app.listen(8000, () => console.log('The server is running at http://localhost:8000'));
+app.listen(5000, () => console.log('The server is running at http://localhost:8000'));
