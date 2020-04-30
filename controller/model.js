@@ -19,13 +19,11 @@ exports.login = function (name, password) {
 //Inscription
 exports.register = function (name, password) {
     db.prepare('INSERT INTO user VALUES (@id, @name, @password)').run({ id: null, name: name, password: password });
-    //console.log(name, password);
 }
 
 //Infos d'un profil
 exports.printProfil = function (id) {
     var user = db.prepare('SELECT name FROM user WHERE id=?').get(id);
-    //console.log(user.name);
     return user.name;
 }
 

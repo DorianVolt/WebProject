@@ -15,9 +15,6 @@ var load = function (filename) {
 
     db.prepare('CREATE TABLE game (id INTEGER, name TEXT, userId INTEGER)').run();
 
-    var insert4 = db.prepare('INSERT INTO user VALUES (@id, @name, @password)');
-
-    insert4.run({ id: 2, name: "zobi", password: "1" });
 }
 
 load('db.sqlite');
