@@ -30,7 +30,7 @@ app.post('/register', (req, res) => {
     var MDP = model.testMDP(req.body.password, req.body.passwordConfirm);
     var username = model.doubleName(req.body.username);
     if (!MDP || !username) {
-        res.redirect('/register');
+        res.redirect('/error');
     } else {
         model.register(req.body.username, req.body.password);
         res.render('validation');
@@ -50,6 +50,10 @@ app.post('/', (req, res) => {
 app.get('/', (req, res) => {
     var session = req.session
     res.render('index', session);
+});
+
+app.get('/error', (req, res) => {
+    res.render('error');
 });
 
 //Page d'inscription
@@ -76,11 +80,11 @@ app.get('/profil', is_authenticated, (req, res) => {
     var name = model.printProfil(req.session.user);
     if (name == -1) {
         console.log('Authentication failed !')
-        res.redirect('/')
+        res.redirect('/error')
     } else {
         var games = model.getGamesById(req.session.user)
         var authenticated = req.session.authenticated
-        res.render('profil',{ pseudo: name, games ,authenticated});
+        res.render('profil', { pseudo: name, games, authenticated });
     }
 })
 app.post('/profil', (req, res) => {
@@ -121,9 +125,9 @@ app.post('/game', async (req, res) => {
     }
     else {
         result.authenticated = req.session.authenticated
-        result.hasNext =hasNext
-        result.hasPrev =hasPrev
-        result.pseudo =  model.printProfil(req.session.user);
+        result.hasNext = hasNext
+        result.hasPrev = hasPrev
+        result.pseudo = model.printProfil(req.session.user);
         res.render('../views/game', result)
     }
 })
@@ -152,10 +156,10 @@ app.get('/game', async (req, res) => {
             hasNext = true
         }
         result.authenticated = req.session.authenticated
-        result.hasNext =hasNext
-        result.hasPrev =hasPrev
-        result.pseudo =  model.printProfil(req.session.user);
-        res.render('../views/game', result )
+        result.hasNext = hasNext
+        result.hasPrev = hasPrev
+        result.pseudo = model.printProfil(req.session.user);
+        res.render('../views/game', result)
     }
 })
 
@@ -182,4 +186,4 @@ app.post('/delete/:name', is_authenticated, (req, res) => {
     res.redirect('/profil')
 })
 
-app.listen(5000, () => console.log('The server is running at http://localhost:8000'));
+app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

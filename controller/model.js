@@ -27,9 +27,9 @@ exports.printProfil = function (id) {
     return user.name;
 }
 
-//Check MDP(pas identique)
+//Check MDP(pas identique ou trop court)
 exports.testMDP = function (MDP1, MDP2) {
-    if (MDP1 == "" || MDP2 == "" || MDP1 != MDP2) {
+    if (MDP1 == "" || MDP2 == "" || MDP1 != MDP2 || MDP1.length < 6) {
         return false;
     } else return true;
 }
