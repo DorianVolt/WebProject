@@ -84,19 +84,19 @@ app.get('/profil', is_authenticated, (req, res) => {
     } else {
         var games = model.getGamesById(req.session.user)
         var authenticated = req.session.authenticated
-        var image = model.getImageById(req.session.user) 
+        var image = model.getImageById(req.session.user)
         var favorites = model.getFavById(req.session.user)
-        var hasGame = games.length !=0
-        var hasFav = favorites.length !=0
-        res.render('profil', { pseudo: name, games, authenticated,image,favorites,hasGame,hasFav });
+        var hasGame = games.length != 0
+        var hasFav = favorites.length != 0
+        res.render('profil', { pseudo: name, games, authenticated, image, favorites, hasGame, hasFav });
     }
 })
-app.post('/profil', (req, res) => {
+app.post('/profil', is_authenticated, (req, res) => {
     res.redirect('/profil');
 });
 
 //Déconnexion
-app.get('/logout', (req, res) => {
+app.get('/logout', is_authenticated, (req, res) => {
     req.session.destroy()
     res.redirect('/')
 })
@@ -117,7 +117,7 @@ app.get('/ajoutPhoto', async (req, res) => {
 })
 
 app.post('/ajoutPhoto', async (req, res) => {
-    model.addPhoto(req.body.lienImage,req.session.user)
+    model.addPhoto(req.body.lienImage, req.session.user)
     res.redirect('/profil')
 })
 
@@ -208,6 +208,25 @@ app.post('/ajoutFav/:name', is_authenticated, (req, res) => {
 app.post('/deleteFav/:name', is_authenticated, (req, res) => {
     model.deleteFav(req.params.name, req.session.user)
     res.redirect('/profil')
+})
+
+//Page profil via recherche
+app.post('/userSearch', (req, res) => {
+    var name = req.body.searchName
+    var idResearch = model.getUserIdByName(name)
+    if (idResearch == undefined) {
+        res.render('noSuchUser')
+    }
+    else {
+        var userId = idResearch.id
+        var games = model.getGamesById(userId)
+        var image = model.getImageById(userId)
+        var favorites = model.getFavById(userId)
+        var hasGame = games.length != 0
+        var hasFav = favorites.length != 0
+        var authenticated = req.session.authenticated
+        res.render('profilSearch', { pseudo: name, games, image, favorites, hasGame, hasFav ,authenticated});
+    }
 })
 
 app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

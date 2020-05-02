@@ -101,3 +101,11 @@ exports.getFavById = function (userId) {
     var games = db.prepare('Select gameName from favorites where userId=?').all(userId)
     return games
 }
+
+//Retourne un user selon son nom
+exports.getUserIdByName = function(name){
+    // if(name != undefined){
+    // var userName = name.slice(1)}
+    var user = db.prepare('SELECT id FROM user WHERE name=?').get(name);
+    return user
+}
