@@ -23,6 +23,19 @@
             </div>
         </div>
         <p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Où l'acheter ?
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"> {{#stores}}
+                        <h5>{{store.name}}</h5>
+                        {{/stores}}</a>
+                </div>
+            </div>
+        </p>
+        <p>
             {{#authenticated}}
             <form method="POST" action="/ajout/:{{id}}/:{{name}}">
                 <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
