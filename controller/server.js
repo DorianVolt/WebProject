@@ -130,11 +130,11 @@ app.post('/ajoutPhoto',  (req, res) => {
 })
 
 //Suppression du compte
-app.get('/deleteAccount',  (req, res) => {
+app.get('/deleteAccount', is_authenticated, (req, res) => {
     res.render('deleteAccount')
 })
 
-app.post('/deleteAccount',  (req, res) => {
+app.post('/deleteAccount',is_authenticated,  (req, res) => {
     model.deleteProfile(req.session.user)
     req.session.destroy()
     res.redirect('/')
@@ -252,7 +252,16 @@ app.post('/userSearch', (req, res) => {
 app.get('/users', (req,res)=> {
     var users = model.getUSERS()
     var authenticated = req.session.authenticated
-    res.render('users', {users,authenticated})
+    var sorted = false;
+    res.render('users', {users,authenticated,sorted})
+})
+
+//Trie les utilisateurs par affinité par rapport a l'utilisateur connecté
+app.post('/sortByAffinity',(req,res) =>{
+    var users = model.getByAffinity(req.session.user)
+    var authenticated = req.session.authenticated
+    var sorted = true;
+    res.render('users', {users,authenticated,sorted})
 })
 
 app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

@@ -1,30 +1,50 @@
 {{> header}}
-<div form="text-inline">
-    <h1 class="text-danger">Utilisateurs:
-        <br>
-        <h3 class="text-light">Il y a {{users.length}} utilisateur(s).
-            <br>
-            <br>
+<div class="row row-cols-1 row-cols-sm-2">
+    <div class="col">
+        <div form="text-inline">
+            {{^sorted}}
+            <h1 class="text-danger">Utilisateurs:
+                <br>
+                <h3 class="text-light">Il y a {{users.length}} utilisateur(s).
+                </h3>
+                <form class="form-inline" method="POST" action="/sortByAffinity">
+                    <p><button id="submit" class="btn btn-info">Trier par affinité</button></p>
+                </form>
+                {{/sorted}}
+                {{#sorted}}
+                <h1 class="text-danger">Il y a {{users.length}} utilisateur(s) qui ont des jeux en commun avec vous :
+                    <br>
+                {{/sorted}}
+        </div>
+    </div>
 
-        </h3>
-    </h3>
+    <div class="col">
+
+    </div>
 </div>
+<br>
+<br>
+<br>
+<br>
 {{#users}}
 <div class="row row-cols-1 row-cols-sm-2">
     <div class="col">
         <h2 class="text-danger">{{name}}</h1>
     </div>
-    <p>
-        {{#authenticated}}
-        <div class="col">
+    <div class="col">
+        <p>
+            {{#authenticated}}
+
             <form>
-                <input class="btn btn-primary"  value="Ajouter en amis">
+                <input class="btn btn-primary" value="Ajouter en amis">
             </form>
-        </div>
-        {{/authenticated}}
-    </p>
+
+            {{/authenticated}}
+        </p>
+    </div>
 </div>
 <br>
 <br>
 {{/users}}
+
 {{> footer}}

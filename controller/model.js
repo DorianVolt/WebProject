@@ -50,10 +50,10 @@ exports.requestToApi = async function (page, gameName) {
 }
 
 //Ajout Photo
-exports.addPhoto =  function (link,userId) {
+exports.addPhoto = function (link, userId) {
     //Supprime si jamais on veut la modifier et pas juste ajouter
     db.prepare('DELETE from profilePictures WHERE userId=?').run(userId)
-    db.prepare('INSERT INTO profilePictures VALUES (@userId, @link)').run({ userId: userId, link: link});
+    db.prepare('INSERT INTO profilePictures VALUES (@userId, @link)').run({ userId: userId, link: link });
 }
 
 //Recherche de photo
@@ -67,7 +67,7 @@ exports.getImageById = function (userId) {
 exports.addGame = function (gameId, gameName, uid) {
     //Supprime le charactère ":" du nom car il empêche l'insertion 
     var name = gameName.slice(1)
-    db.prepare('DELETE from game WHERE userId=? AND name=? AND id=?').run(uid,name,gameId)
+    db.prepare('DELETE from game WHERE userId=? AND name=? AND id=?').run(uid, name, gameId)
     db.prepare('INSERT INTO  game VALUES (@id,@name,@userId)').run({ id: gameId, name: name, userId: uid });
 }
 
@@ -84,10 +84,10 @@ exports.deleteGameById = function (gameName, userId) {
 }
 
 //Ajout un favoris
-exports.addFav = function(gameName,userId){
+exports.addFav = function (gameName, userId) {
     var name = gameName.slice(1)
-    db.prepare('DELETE from favorites WHERE userId=? AND gameName=?').run(userId,name)
-    db.prepare('INSERT INTO  favorites VALUES (@userId,@name)').run({ userId: userId, name: name});
+    db.prepare('DELETE from favorites WHERE userId=? AND gameName=?').run(userId, name)
+    db.prepare('INSERT INTO  favorites VALUES (@userId,@name)').run({ userId: userId, name: name });
 }
 
 //Supprime un favoris
@@ -103,22 +103,28 @@ exports.getFavById = function (userId) {
 }
 
 //Retourne un user selon son nom
-exports.getUserIdByName = function(name){
+exports.getUserIdByName = function (name) {
     var user = db.prepare('SELECT id FROM user WHERE name=?').get(name);
     return user
 }
 
 //Retourne tout les utilisateurs du site
-exports.getUSERS = function() {
+exports.getUSERS = function () {
     var users = db.prepare('SELECT id,name FROM user').all()
     return users
 }
 
 //Suppression du compte
-
-exports.deleteProfile = function(userId) {
+exports.deleteProfile = function (userId) {
     db.prepare('DELETE FROM user WHERE id=?').run(userId)
     db.prepare('DELETE FROM game WHERE userId=?').run(userId)
     db.prepare('DELETE FROM profilePictures WHERE userId=?').run(userId)
     db.prepare('DELETE FROM favorites WHERE userId=?').run(userId)
+}
+
+//Trouve les utilisateurs ayant des jeux en commun avec la personne connectée 
+exports.getByAffinity = function (userId) {
+    var users = db.prepare('SELECT name FROM user WHERE id IN (SELECT userId FROM game WHERE name IN(SELECT name FROM game WHERE userId=?))GROUP BY id HAVING id<>?').all(userId,userId)
+    console.log(users)
+    return users
 }
