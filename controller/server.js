@@ -84,7 +84,8 @@ app.get('/profil', is_authenticated, (req, res) => {
     } else {
         var games = model.getGamesById(req.session.user)
         var authenticated = req.session.authenticated
-        res.render('profil', { pseudo: name, games, authenticated });
+        var image = model.getImageById(req.session.user) 
+        res.render('profil', { pseudo: name, games, authenticated,image });
     }
 })
 app.post('/profil', (req, res) => {
@@ -106,6 +107,16 @@ function is_authenticated(req, res, next) {
     }
     res.status(401).send('Authentication failed');
 }
+
+//Page d'ajout de photo de profil
+app.get('/ajoutPhoto', async (req, res) => {
+    res.render('ajoutPhoto')
+})
+
+app.post('/ajoutPhoto', async (req, res) => {
+    model.addPhoto(req.body.lienImage,req.session.user)
+    res.redirect('/profil')
+})
 
 //Requête à l'API ------------------------------------------------------------------------------------------------------------------------------------------
 

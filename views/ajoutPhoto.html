@@ -1,0 +1,21 @@
+{{> header}}
+<form>
+    <div class="form-group">
+        <p class="display-4 text-light">
+            Ajouter une photo de profil
+        </p>
+        <p class="display-5 text-light">
+            Merci de mettre le lien vers la photo que vous voulez mettre en photo de profil:
+        </p>
+        <p class="display-5 text-light">
+            Elle sera redimmensionnée (pas de GIF).
+        </p>
+
+    </div>
+
+</form>
+<form class="form-inline" method="POST" action="/ajoutPhoto">
+    <p><input id="jeu" class="form-control" placeholder="Lien" name="lienImage"> </input></p>
+    <p><button id="submit" class="btn btn-info">Accepter</button></p>
+</form>
+{{> footer}}

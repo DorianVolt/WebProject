@@ -49,6 +49,20 @@ exports.requestToApi = async function (page, gameName) {
     return json;
 }
 
+//Ajout Photo
+exports.addPhoto =  function (link,userId) {
+    //Supprime si jamais on veut la modifier et pas juste ajouter
+    db.prepare('DELETE from profilePictures WHERE userId=?').run(userId)
+    db.prepare('INSERT INTO profilePictures VALUES (@userId, @link)').run({ userId: userId, link: link});
+}
+
+//Recherche de photo
+exports.getImageById = function (userId) {
+    var image;
+    image = db.prepare('SELECT link FROM profilePictures WHERE userId=?').get(userId);
+    return image
+}
+
 //Ajoute un jeu à la liste d'un utilisateur
 exports.addGame = function (gameId, gameName, uid) {
     //Supprime le charactère ":" du nom car il empêche l'insertion 

@@ -16,6 +16,10 @@ var load = function (filename) {
 
     db.prepare('CREATE TABLE game (id INTEGER, name TEXT, userId INTEGER)').run();
 
+    db.prepare('DROP TABLE IF EXISTS profilePictures').run();
+
+    db.prepare('CREATE TABLE profilePictures (userId INTEGER PRIMARY KEY, link BLOB)').run();
+
 }
 
 load('db.sqlite');

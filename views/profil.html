@@ -1,11 +1,17 @@
 {{> header}}
 <div class="jumbotron" style="text-align:center;">
     <div class="rounded rounded-circle bg-dark" style="height: 140px; width: 140px; text-align: center; margin:0 auto">
-        <a>Ajouter</a>
+        
+        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto" alt="Responsive image" src="{{image.link}}">
     </div>
 
     <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
 
+    <form action="/ajoutPhoto">
+        <div class="form-group">
+            <button class="btn btn-dark" type="submit">Ajouter/Modifier la photo de profil</button>
+        </div>
+    </form>
 </div>
 
 <h2 class="text-danger">Listes de vos jeux:</h2>
