@@ -1,8 +1,12 @@
 {{> header}}
 <div class="jumbotron" style="text-align:center;">
     <div class="rounded rounded-circle bg-dark" style="height: 140px; width: 140px; text-align: center; margin:0 auto">
-        
+        {{#image.link}}
         <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto" alt="Responsive image" src="{{image.link}}">
+        {{/image.link}}
+        {{^image.link}}
+        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto" alt="Responsive image" src="https://cdn3.iconfinder.com/data/icons/basic-ui-element-s94-3/64/Basic_UI_Icon_Pack_-_Glyph_user-512.png">
+        {{/image.link}}
     </div>
 
     <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
