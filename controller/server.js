@@ -33,7 +33,7 @@ app.post('/register', (req, res) => {
         res.redirect('/error');
     } else {
         model.register(req.body.username, req.body.password);
-        res.render('validation');
+        res.redirect('/validation');
     }
 })
 
@@ -54,6 +54,14 @@ app.get('/', (req, res) => {
 
 app.get('/error', (req, res) => {
     res.render('error');
+});
+
+app.get('/validation', (req, res) => {
+    res.render('validation');
+});
+
+app.get('/errorConnexion', (req, res) => {
+    res.render('errorConnexion');
 });
 
 //Page d'inscription
@@ -108,7 +116,7 @@ function is_authenticated(req, res, next) {
         req.session.notauthenticated = false;
         return next();
     }
-    res.render('errorConnexion');
+    res.redirect('/errorConnexion');
 }
 
 //Page d'ajout de photo de profil
@@ -142,7 +150,7 @@ app.post('/game', async (req, res) => {
         result.hasNext = hasNext
         result.hasPrev = hasPrev
         if (req.session.authenticated) { result.pseudo = model.printProfil(req.session.user); }
-        res.render('../views/game', result)
+        res.render('game', result)
     }
 })
 
@@ -171,7 +179,7 @@ app.get('/game', async (req, res) => {
         result.hasPrev = hasPrev
         //Transmet le pseudo au render uniquement si l'utilisateur est connecté
         if (req.session.authenticated) { result.pseudo = model.printProfil(req.session.user); }
-        res.render('../views/game', result)
+        res.render('game', result)
     }
 })
 
@@ -227,6 +235,13 @@ app.post('/userSearch', (req, res) => {
         var authenticated = req.session.authenticated
         res.render('profilSearch', { pseudo: name, games, image, favorites, hasGame, hasFav ,authenticated});
     }
+})
+
+//Retourne la liste de sutilisateur pour une recherche plus simple
+app.get('/users', (req,res)=> {
+    var users = model.getUSERS()
+    var authenticated = req.session.authenticated
+    res.render('users', {users,authenticated})
 })
 
 app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

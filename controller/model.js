@@ -104,8 +104,12 @@ exports.getFavById = function (userId) {
 
 //Retourne un user selon son nom
 exports.getUserIdByName = function(name){
-    // if(name != undefined){
-    // var userName = name.slice(1)}
     var user = db.prepare('SELECT id FROM user WHERE name=?').get(name);
     return user
+}
+
+//Retourne tout les utilisateurs du site
+exports.getUSERS = function() {
+    var users = db.prepare('SELECT id,name FROM user').all()
+    return users
 }

@@ -1,0 +1,30 @@
+{{> header}}
+<div form="text-inline">
+    <h1 class="text-danger">Utilisateurs:
+        <br>
+        <h3 class="text-light">Il y a {{users.length}} utilisateur(s).
+            <br>
+            <br>
+
+        </h3>
+    </h3>
+</div>
+{{#users}}
+<div class="row row-cols-1 row-cols-sm-2">
+    <div class="col">
+        <h2 class="text-danger">{{name}}</h1>
+    </div>
+    <p>
+        {{#authenticated}}
+        <div class="col">
+            <form>
+                <input class="btn btn-primary"  value="Ajouter en amis">
+            </form>
+        </div>
+        {{/authenticated}}
+    </p>
+</div>
+<br>
+<br>
+{{/users}}
+{{> footer}}
