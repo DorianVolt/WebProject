@@ -85,7 +85,10 @@ app.get('/profil', is_authenticated, (req, res) => {
         var games = model.getGamesById(req.session.user)
         var authenticated = req.session.authenticated
         var image = model.getImageById(req.session.user) 
-        res.render('profil', { pseudo: name, games, authenticated,image });
+        var favorites = model.getFavById(req.session.user)
+        var hasGame = games.length !=0
+        var hasFav = favorites.length !=0
+        res.render('profil', { pseudo: name, games, authenticated,image,favorites,hasGame,hasFav });
     }
 })
 app.post('/profil', (req, res) => {
@@ -105,7 +108,7 @@ function is_authenticated(req, res, next) {
         req.session.notauthenticated = false;
         return next();
     }
-    res.status(401).send('Authentication failed');
+    res.render('errorConnexion');
 }
 
 //Page d'ajout de photo de profil
@@ -192,6 +195,18 @@ app.post('/ajout/:id/:name', is_authenticated, (req, res) => {
 //Delete un jeu de la liste
 app.post('/delete/:name', is_authenticated, (req, res) => {
     model.deleteGameById(req.params.name, req.session.user)
+    res.redirect('/profil')
+})
+
+//Ajout d'un jeu dans la liste des favoris de l'utilisateur
+app.post('/ajoutFav/:name', is_authenticated, (req, res) => {
+    model.addFav(req.params.name, req.session.user)
+    res.redirect('/profil')
+})
+
+//Delete un jeu de la liste
+app.post('/deleteFav/:name', is_authenticated, (req, res) => {
+    model.deleteFav(req.params.name, req.session.user)
     res.redirect('/profil')
 })
 

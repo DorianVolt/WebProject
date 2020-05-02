@@ -2,26 +2,72 @@
 <div class="jumbotron" style="text-align:center;">
     <div class="rounded rounded-circle bg-dark" style="height: 140px; width: 140px; text-align: center; margin:0 auto">
         {{#image.link}}
-        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto" alt="Responsive image" src="{{image.link}}">
+        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto"
+            alt="Responsive image" src="{{image.link}}">
         {{/image.link}}
         {{^image.link}}
-        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto" alt="Responsive image" src="https://cdn3.iconfinder.com/data/icons/basic-ui-element-s94-3/64/Basic_UI_Icon_Pack_-_Glyph_user-512.png">
+        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto"
+            alt="Responsive image"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png">
         {{/image.link}}
     </div>
 
     <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
 
+    {{#image.link}}
     <form action="/ajoutPhoto">
         <div class="form-group">
-            <button class="btn btn-dark" type="submit">Ajouter/Modifier la photo de profil</button>
+            <button class="btn btn-dark" type="submit">Modifier la photo de profil</button>
         </div>
     </form>
+    {{/image.link}}
+    {{^image.link}}
+    <form action="/ajoutPhoto">
+        <div class="form-group">
+            <button class="btn btn-dark" type="submit">Ajouter une photo de profil</button>
+        </div>
+    </form>
+    {{/image.link}}
 </div>
+<div class="row row-cols-1 row-cols-sm-2">
+    <div class="col">
+        {{#hasGame}}
+        <h2 class="text-danger">Listes de vos jeux:</h2>
+        <p></p>
+        <p></p>
+        {{/hasGame}}
+        {{^hasGame}}
+        <h2 class="text-danger">Votre liste de jeux est vide vous pouvez en ajouter depuis la recherche en haut de votre
+            écran
+        </h2>
+        {{/hasGame}}
+        {{#games}}
+        <h3 class="text-light">- {{name}}</h3>
+        <form method="POST" action="/delete/:{{name}}">
+            <input class="btn btn-danger" type="submit" value="Supprimer">
+            <p></p>
+            <p></p>
+        </form>
+        <form method="POST" action="/ajoutFav/:{{name}}">
+            <input class="btn btn-warning" type="submit" value="Ajouter aux favoris">
+            <p></p>
+            <p></p>
+        </form>
+        {{/games}}
+    </div>
+    <div class="col">
+        {{#hasFav}}
+        <h2 class="text-danger">Vos jeux favoris:</h2>
+        {{/hasFav}}
+        {{#favorites}}
+        <h3 class="text-light">- {{gameName}}</h3>
+        <form method="POST" action="/deleteFav/:{{gameName}}">
+            <input class="btn btn-danger" type="submit" value="Supprimer des Favoris">
+            <p></p>
+            <p></p>
 
-<h2 class="text-danger">Listes de vos jeux:</h2>
-{{#games}}
-<h3 class="text-light">- {{name}}</h3>
-<form method="POST" action="/delete/:{{name}}">
-    <input class="btn btn-info" type="submit" value="Supprimer">
-</form>
-{{/games}} {{> footer}}
+        </form>
+        {{/favorites}}
+    </div>
+</div>
+{{> footer}}

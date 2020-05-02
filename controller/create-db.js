@@ -9,16 +9,14 @@ let db = new Sqlite('db.sqlite');
 var load = function (filename) {
 
     db.prepare('DROP TABLE IF EXISTS user').run();
-
-    db.prepare('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)').run();
-
-    db.prepare('DROP TABLE IF EXISTS game').run();
-
-    db.prepare('CREATE TABLE game (id INTEGER, name TEXT, userId INTEGER)').run();
-
+    db.prepare('DROP TABLE IF EXISTS favorites').run();
+    db.prepare('DROP TABLE IF EXISTS game').run(); 
     db.prepare('DROP TABLE IF EXISTS profilePictures').run();
 
+    db.prepare('CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)').run();
+    db.prepare('CREATE TABLE game (id INTEGER, name TEXT, userId INTEGER)').run();
     db.prepare('CREATE TABLE profilePictures (userId INTEGER PRIMARY KEY, link BLOB)').run();
+    db.prepare('CREATE TABLE favorites (userId INTEGER , gameName TEXT)').run();
 
 }
 

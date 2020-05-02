@@ -66,8 +66,9 @@ exports.getImageById = function (userId) {
 //Ajoute un jeu à la liste d'un utilisateur
 exports.addGame = function (gameId, gameName, uid) {
     //Supprime le charactère ":" du nom car il empêche l'insertion 
-    var game = gameName.slice(1)
-    db.prepare('INSERT INTO  game VALUES (@id,@name,@userId)').run({ id: gameId, name: game, userId: uid });
+    var name = gameName.slice(1)
+    db.prepare('DELETE from game WHERE userId=? AND name=? AND id=?').run(uid,name,gameId)
+    db.prepare('INSERT INTO  game VALUES (@id,@name,@userId)').run({ id: gameId, name: name, userId: uid });
 }
 
 //Retourne tout les jeux d'un utilisateur
@@ -80,4 +81,23 @@ exports.getGamesById = function (userId) {
 exports.deleteGameById = function (gameName, userId) {
     var game = gameName.slice(1)
     db.prepare('DELETE from game WHERE userId=?AND name=?').run(userId, game);
+}
+
+//Ajout un favoris
+exports.addFav = function(gameName,userId){
+    var name = gameName.slice(1)
+    db.prepare('DELETE from favorites WHERE userId=? AND gameName=?').run(userId,name)
+    db.prepare('INSERT INTO  favorites VALUES (@userId,@name)').run({ userId: userId, name: name});
+}
+
+//Supprime un favoris
+exports.deleteFav = function (gameName, userId) {
+    var game = gameName.slice(1)
+    db.prepare('DELETE from favorites WHERE userId=?AND gameName=?').run(userId, game);
+}
+
+//Retourne les favoris de l'utilisateur
+exports.getFavById = function (userId) {
+    var games = db.prepare('Select gameName from favorites where userId=?').all(userId)
+    return games
 }

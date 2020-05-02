@@ -30,7 +30,10 @@
                         href="/" style="height: 50px; width: 50px;"></img> </button></form>
 
             <div class="form-inline">
-
+                <form class="form-inline" method="POST" action="/game">
+                    <input id="jeu" class="form-control" placeholder="Utlisateur" name="userSearch"> </input>
+                    <button id="submit" class="btn btn-alert">Trouver</button>
+                </form>
                 <form class="form-inline" method="POST" action="/game">
                     <input id="jeu" class="form-control" placeholder="Jeux" name="research"> </input>
                     <button id="submit" class="btn btn-alert">Rechercher</button>
