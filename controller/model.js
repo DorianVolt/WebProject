@@ -113,3 +113,12 @@ exports.getUSERS = function() {
     var users = db.prepare('SELECT id,name FROM user').all()
     return users
 }
+
+//Suppression du compte
+
+exports.deleteProfile = function(userId) {
+    db.prepare('DELETE FROM user WHERE id=?').run(userId)
+    db.prepare('DELETE FROM game WHERE userId=?').run(userId)
+    db.prepare('DELETE FROM profilePictures WHERE userId=?').run(userId)
+    db.prepare('DELETE FROM favorites WHERE userId=?').run(userId)
+}

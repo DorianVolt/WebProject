@@ -1,0 +1,16 @@
+{{> header}}
+
+    <div class="form-group">
+        <h6 class="display-4 text-light">
+            Êtes-vous sure de vouloir supprimer votre compte ?
+        </h6>
+        <br>
+        <form class="px-4 py-3"  method="POST" action="/deleteAccount">
+            <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
+        </form>
+        <br><form action="/">
+            <p><button class="btn btn-light" type="submit">Retour à l'accueil</button></p>
+        </form>
+    </div>
+
+{{> footer}}

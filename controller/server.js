@@ -120,13 +120,24 @@ function is_authenticated(req, res, next) {
 }
 
 //Page d'ajout de photo de profil
-app.get('/ajoutPhoto', async (req, res) => {
+app.get('/ajoutPhoto',  (req, res) => {
     res.render('ajoutPhoto')
 })
 
-app.post('/ajoutPhoto', async (req, res) => {
+app.post('/ajoutPhoto',  (req, res) => {
     model.addPhoto(req.body.lienImage, req.session.user)
     res.redirect('/profil')
+})
+
+//Suppression du compte
+app.get('/deleteAccount',  (req, res) => {
+    res.render('deleteAccount')
+})
+
+app.post('/deleteAccount',  (req, res) => {
+    model.deleteProfile(req.session.user)
+    req.session.destroy()
+    res.redirect('/')
 })
 
 //Requête à l'API ------------------------------------------------------------------------------------------------------------------------------------------
