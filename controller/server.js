@@ -264,4 +264,14 @@ app.post('/sortByAffinity',(req,res) =>{
     res.render('users', {users,authenticated,sorted})
 })
 
+
+app.get('/gameInfo/:slug', async (req, res) => {
+    var gameName = req.params.slug 
+    var result = await model.requestInfoToApi(gameName)
+        result.authenticated = req.session.authenticated
+        if (req.session.authenticated) { result.pseudo = model.printProfil(req.session.user); }
+        res.render('gameInfo', result)
+
+})
+
 app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

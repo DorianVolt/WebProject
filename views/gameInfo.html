@@ -1,0 +1,91 @@
+{{> header}}
+<br>
+
+<div class="row row-cols-1 row-cols-sm-2">
+
+    <div class="col">
+        <h1 class="text-danger">{{name}}</h1>
+        <br>
+        <br>
+        <p><h4 class="text-warning">Note :</h4><h3 class="text-light"> {{rating}}/5</h3></p>
+           <p><h4 class="text-warning">Date de Sortie :</h4> <h3 class="text-light"> {{released}}</h3></p>
+        <p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Plateformes
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"> {{#platforms}}
+                        <h5>{{platform.name}}</h5>
+                        {{/platforms}}</a>
+                </div>
+            </div>
+        </p>
+        <p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Genre(s)
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"> {{#genres}}
+                        <h5>{{name}}</h5>
+                        {{/genres}}</a>
+                </div>
+            </div>
+        </p>
+        <p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Où l'acheter ?
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"> {{#stores}}
+                        <h5>{{store.name}}</h5>
+                        {{/stores}}</a>
+                </div>
+            </div>
+        </p>
+        <p>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Développeur(s)
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"> {{#developers}}
+                        <h5>{{name}}</h5>
+                        {{/developers}}</a>
+                </div>
+            </div>
+        </p>
+        <br>
+        <br>
+        <p>
+            {{#clip}}
+            <video controls width="500" src="{{clip}}">
+            </video>
+            {{/clip}}
+        </p>
+
+        <p>
+            {{#authenticated}}
+            <form method="POST" action="/ajout/:{{id}}/:{{name}}">
+                <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
+            </form>
+            {{/authenticated}}
+        </p>
+    </div>
+    <div class="col">
+        <img src="{{background_image}}" class="img-fluid" alt="Responsive image">
+        <br>
+        <br>
+        <p class="text-light"><br>{{description_raw}}</a>
+    </div>
+
+</div>
+<br>
+<br>
+{{> footer}}

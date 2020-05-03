@@ -10,37 +10,18 @@
 <div class="row row-cols-1 row-cols-sm-2">
     <div class="col">
         <h1 class="text-danger">{{name}}</h1>
-        <h5 class="text-light">Note : {{rating}}/5</h5>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Plateformes
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item"> {{#platforms}}
-                    <h5>{{platform.name}}</h5>
-                    {{/platforms}}</a>
-            </div>
-        </div>
-        <p>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Où l'acheter ?
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item"> {{#stores}}
-                        <h5>{{store.name}}</h5>
-                        {{/stores}}</a>
-                </div>
-            </div>
-        </p>
         <p>
             {{#authenticated}}
             <form method="POST" action="/ajout/:{{id}}/:{{name}}">
                 <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
             </form>
             {{/authenticated}}
+
+        </p>
+        <p>
+            <form method="GET" action="/gameInfo/:{{slug}}">
+                <input class="btn btn-info" type="submit" value="Plus d'informations">
+            </form>
         </p>
     </div>
     <div class="col">

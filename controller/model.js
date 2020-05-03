@@ -49,6 +49,15 @@ exports.requestToApi = async function (page, gameName) {
     return json;
 }
 
+//Requête prescise à l'API
+exports.requestInfoToApi = async function (gameName) {
+    gameName = gameName.slice(1)
+    var apiUrl = "https://api.rawg.io/api/games/" + gameName;
+    var repsonse = await fetch(apiUrl)
+    var json = await repsonse.json();
+    return json;
+}
+
 //Ajout Photo
 exports.addPhoto = function (link, userId) {
     //Supprime si jamais on veut la modifier et pas juste ajouter
@@ -125,6 +134,5 @@ exports.deleteProfile = function (userId) {
 //Trouve les utilisateurs ayant des jeux en commun avec la personne connectée 
 exports.getByAffinity = function (userId) {
     var users = db.prepare('SELECT name FROM user WHERE id IN (SELECT userId FROM game WHERE name IN(SELECT name FROM game WHERE userId=?))GROUP BY id HAVING id<>?').all(userId,userId)
-    console.log(users)
     return users
 }
