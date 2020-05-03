@@ -1,50 +1,54 @@
 {{> header}}
-<div class="jumbotron" style="text-align:center;">
-    <div class="rounded rounded-circle bg-dark" style="height: 140px; width: 140px; text-align: center; margin:0 auto">
-        {{#image.link}}
-        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto"
-            alt="Responsive image" src="{{image.link}}">
-        {{/image.link}}
-        {{^image.link}}
-        <img class="rounded-circle" style="height: 140px; width: 140px; text-align: center; margin:0 auto"
-            alt="Responsive image"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png">
-        {{/image.link}}
+<div class="jumbotron" style="text-align: center;">
+  <div
+    class="rounded rounded-circle bg-dark"
+    style="height: 140px; width: 140px; text-align: center; margin: 0 auto;"
+  >
+    {{#image.link}}
+    <img
+      class="rounded-circle"
+      style="height: 140px; width: 140px; text-align: center; margin: 0 auto;"
+      alt="Responsive image"
+      src="{{image.link}}"
+    />
+    {{/image.link}} {{^image.link}}
+    <img
+      class="rounded-circle"
+      style="height: 140px; width: 140px; text-align: center; margin: 0 auto;"
+      alt="Responsive image"
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png"
+    />
+    {{/image.link}}
+  </div>
+
+  <a class="display-3" style="margin: 0 auto;">{{pseudo}}</a>
+  <p>{{desc}}</p>
+  {{#authenticated}}
+  <form action="users">
+    <div>
+      <button type="submit" class="btn btn-primary">Ajouter en amis</button>
     </div>
-
-    <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
-    <p>{{desc}}</p>
-    {{#authenticated}}
-    <form action="users">
-        <div>
-            <button type="submit" class="btn btn-primary" >Ajouter en amis</button>
-        </div>
-    </form>
-    {{/authenticated}}
-
+  </form>
+  {{/authenticated}}
 </div>
 <div class="row row-cols-1 row-cols-sm-2">
-    <div class="col">
-        {{#hasGame}}
-        <h2 class="text-danger">Listes de ses jeux: </h2>
-        <p></p>
-        <p></p>
-        {{/hasGame}}
-        {{^hasGame}}
-        <h2 class="text-danger">Cet utilisateur ne possède pas de jeux.
-        </h2>
-        {{/hasGame}}
-        {{#games}}
-        <h3 class="text-light">- {{name}}</h3>
-        {{/games}}
-    </div>
-    <div class="col">
-        {{#hasFav}}
-        <h2 class="text-danger">Ses jeux favoris:</h2>
-        {{/hasFav}}
-        {{#favorites}}
-        <h3 class="text-light">- {{gameName}}</h3>
-        {{/favorites}}
-    </div>
+  <div class="col">
+    {{#hasGame}}
+    <h2 class="text-danger">Listes de ses jeux:</h2>
+    <p></p>
+    <p></p>
+    {{/hasGame}} {{^hasGame}}
+    <h2 class="text-danger">Cet utilisateur ne possède pas de jeux.</h2>
+    {{/hasGame}} {{#games}}
+    <h3 class="text-light">- {{name}}</h3>
+    {{/games}}
+  </div>
+  <div class="col">
+    {{#hasFav}}
+    <h2 class="text-danger">Ses jeux favoris:</h2>
+    {{/hasFav}} {{#favorites}}
+    <h3 class="text-light">- {{gameName}}</h3>
+    {{/favorites}}
+  </div>
 </div>
 {{> footer}}
