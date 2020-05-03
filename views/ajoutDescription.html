@@ -1,0 +1,19 @@
+{{> header}}
+<form>
+    <div class="form-group">
+        <p class="display-4 text-light">
+            Ajouter une description
+        </p>
+        <p class="display-5 text-light">
+            Décrivez vous en quelques phrases. Cette description sera affiché sur votre profil.
+        </p>
+    
+
+    </div>
+
+</form>
+<form class="form-inline" method="POST" action="/ajoutDescription">
+    <p><input id="jeu" class="form-control" placeholder="Description" name="description"> </input></p>
+    <p><button id="submit" class="btn btn-info">Accepter</button></p>
+</form>
+{{> footer}}

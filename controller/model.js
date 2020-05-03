@@ -51,7 +51,6 @@ exports.requestToApi = async function (page, gameName) {
 
 //Requête prescise à l'API
 exports.requestInfoToApi = async function (gameName) {
-    gameName = gameName.slice(1)
     var apiUrl = "https://api.rawg.io/api/games/" + gameName;
     var repsonse = await fetch(apiUrl)
     var json = await repsonse.json();
@@ -74,8 +73,7 @@ exports.getImageById = function (userId) {
 
 //Ajoute un jeu à la liste d'un utilisateur
 exports.addGame = function (gameId, gameName, uid) {
-    //Supprime le charactère ":" du nom car il empêche l'insertion 
-    var name = gameName.slice(1)
+    var name = gameName
     db.prepare('DELETE from game WHERE userId=? AND name=? AND id=?').run(uid, name, gameId)
     db.prepare('INSERT INTO  game VALUES (@id,@name,@userId)').run({ id: gameId, name: name, userId: uid });
 }
@@ -88,20 +86,20 @@ exports.getGamesById = function (userId) {
 
 //Supprime un jeu de la liste de l'utilisateur
 exports.deleteGameById = function (gameName, userId) {
-    var game = gameName.slice(1)
+    var game = gameName
     db.prepare('DELETE from game WHERE userId=?AND name=?').run(userId, game);
 }
 
 //Ajout un favoris
 exports.addFav = function (gameName, userId) {
-    var name = gameName.slice(1)
+    var name = gameName
     db.prepare('DELETE from favorites WHERE userId=? AND gameName=?').run(userId, name)
     db.prepare('INSERT INTO  favorites VALUES (@userId,@name)').run({ userId: userId, name: name });
 }
 
 //Supprime un favoris
 exports.deleteFav = function (gameName, userId) {
-    var game = gameName.slice(1)
+    var game = gameName
     db.prepare('DELETE from favorites WHERE userId=?AND gameName=?').run(userId, game);
 }
 
@@ -123,6 +121,12 @@ exports.getUSERS = function () {
     return users
 }
 
+//Retourne les admins du site
+exports.getAdmins = function () {
+    var admins = db.prepare('SELECT id FROM admin').get()
+    return admins.id
+}
+
 //Suppression du compte
 exports.deleteProfile = function (userId) {
     db.prepare('DELETE FROM user WHERE id=?').run(userId)
@@ -135,4 +139,16 @@ exports.deleteProfile = function (userId) {
 exports.getByAffinity = function (userId) {
     var users = db.prepare('SELECT name FROM user WHERE id IN (SELECT userId FROM game WHERE name IN(SELECT name FROM game WHERE userId=?))GROUP BY id HAVING id<>?').all(userId,userId)
     return users
+}
+
+//Ajoute une description a la base de donnée
+exports.addDescription = function (desc, userId) {
+    db.prepare('DELETE from descriptions WHERE userId=?').run(userId)
+    db.prepare('INSERT INTO descriptions VALUES (@userId, @desc)').run({ userId: userId, desc: desc });
+}
+
+//Retourne la description d'un utilisateur selon son id
+exports.getDescriptionById=function(userId){
+    var desc = db.prepare('SELECT desc FROM descriptions WHERE userId=?').get(userId)
+    return desc.desc
 }

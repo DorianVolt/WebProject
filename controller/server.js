@@ -77,6 +77,11 @@ app.post('/login', (req, res) => {
         var id = model.login(req.body.name, req.body.password);
         req.session.pseudo = req.body.name;
         req.session.user = id;
+        req.session.isAdmin = false
+        var adminId =model.getAdmins()
+        if(id == adminId){
+            req.session.isAdmin = true
+        }
         res.redirect('/profil');
     }
 
@@ -93,10 +98,11 @@ app.get('/profil', is_authenticated, (req, res) => {
         var games = model.getGamesById(req.session.user)
         var authenticated = req.session.authenticated
         var image = model.getImageById(req.session.user)
+        var desc = model.getDescriptionById(req.session.user)
         var favorites = model.getFavById(req.session.user)
         var hasGame = games.length != 0
         var hasFav = favorites.length != 0
-        res.render('profil', { pseudo: name, games, authenticated, image, favorites, hasGame, hasFav });
+        res.render('profil', { pseudo: name, games, authenticated, image, favorites, hasGame, hasFav,desc });
     }
 })
 app.post('/profil', is_authenticated, (req, res) => {
@@ -138,6 +144,23 @@ app.post('/deleteAccount',is_authenticated,  (req, res) => {
     model.deleteProfile(req.session.user)
     req.session.destroy()
     res.redirect('/')
+})
+
+//Page d'ajout d'une biographie'
+app.get('/ajoutDescription',  (req, res) => {
+    res.render('ajoutDescription')
+})
+
+app.post('/ajoutDescription',  (req, res) => {
+    model.addDescription(req.body.description,req.session.user )
+    res.redirect('/profil')
+})
+
+//Bannissement d'un compte
+app.post('/ban/:id', is_authenticated, (req, res) => {
+    var id = req.params.id
+    model.deleteProfile(id)
+    res.redirect('/users')
 })
 
 //Requête à l'API ------------------------------------------------------------------------------------------------------------------------------------------
@@ -241,10 +264,11 @@ app.post('/userSearch', (req, res) => {
         var games = model.getGamesById(userId)
         var image = model.getImageById(userId)
         var favorites = model.getFavById(userId)
+        var desc = model.getDescriptionById(req.session.user)
         var hasGame = games.length != 0
         var hasFav = favorites.length != 0
         var authenticated = req.session.authenticated
-        res.render('profilSearch', { pseudo: name, games, image, favorites, hasGame, hasFav ,authenticated});
+        res.render('profilSearch', { pseudo: name, games, image, favorites, hasGame, hasFav ,authenticated,desc});
     }
 })
 
@@ -253,7 +277,8 @@ app.get('/users', (req,res)=> {
     var users = model.getUSERS()
     var authenticated = req.session.authenticated
     var sorted = false;
-    res.render('users', {users,authenticated,sorted})
+    var isAdmin = req.session.isAdmin
+    res.render('users', {users,authenticated,sorted,isAdmin})
 })
 
 //Trie les utilisateurs par affinité par rapport a l'utilisateur connecté
@@ -273,5 +298,7 @@ app.get('/gameInfo/:slug', async (req, res) => {
         res.render('gameInfo', result)
 
 })
+
+
 
 app.listen(8000, () => console.log('The server is running at http://localhost:8000'));

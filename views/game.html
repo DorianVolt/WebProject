@@ -12,14 +12,14 @@
         <h1 class="text-danger">{{name}}</h1>
         <p>
             {{#authenticated}}
-            <form method="POST" action="/ajout/:{{id}}/:{{name}}">
+            <form method="POST" action="/ajout/{{id}}/{{name}}">
                 <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
             </form>
             {{/authenticated}}
 
         </p>
         <p>
-            <form method="GET" action="/gameInfo/:{{slug}}">
+            <form method="GET" action="/gameInfo/{{slug}}">
                 <input class="btn btn-info" type="submit" value="Plus d'informations">
             </form>
         </p>

@@ -13,10 +13,11 @@
     </div>
 
     <a class="display-3" style="margin:0 auto">{{pseudo}}</a>
+    <p>{{desc}}</p>
     {{#authenticated}}
-    <form>
-        <div class="form-group">
-            <button class="btn btn-primary" >Ajouter en amis</button>
+    <form action="users">
+        <div>
+            <button type="submit" class="btn btn-primary" >Ajouter en amis</button>
         </div>
     </form>
     {{/authenticated}}
