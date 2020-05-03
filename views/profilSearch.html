@@ -31,7 +31,7 @@
   </form>
   {{/authenticated}}
 </div>
-<div class="row row-cols-1 row-cols-sm-2">
+<div class="row row-cols-1 row-cols-sm-3">
   <div class="col">
     {{#hasGame}}
     <h2 class="text-danger">Listes de ses jeux:</h2>
@@ -49,6 +49,13 @@
     {{/hasFav}} {{#favorites}}
     <h3 class="text-light">- {{gameName}}</h3>
     {{/favorites}}
+  </div>
+  <div class="col">
+    {{#hasCommons}}
+    <h2 class="text-danger">Jeux en commun:</h2>
+    {{/hasCommons}} {{#commons}}
+    <h3 class="text-light">- {{name}}</h3>
+    {{/commons}}
   </div>
 </div>
 {{> footer}}

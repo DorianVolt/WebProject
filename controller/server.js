@@ -272,6 +272,8 @@ app.post("/userSearch", (req, res) => {
     var image = model.getImageById(userId);
     var favorites = model.getFavById(userId);
     var desc = model.getDescriptionById(userId);
+    var commons = model.getCommons(userId, req.session.user);
+    var hasCommons = commons.length != 0;
     var hasGame = games.length != 0;
     var hasFav = favorites.length != 0;
     var authenticated = req.session.authenticated;
@@ -284,6 +286,8 @@ app.post("/userSearch", (req, res) => {
       hasFav,
       authenticated,
       desc,
+      commons,
+      hasCommons,
     });
   }
 });

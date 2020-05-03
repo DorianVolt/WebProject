@@ -197,6 +197,16 @@ exports.getByAffinity = function (userId) {
   return users;
 };
 
+//Trouve les jeux en commun avec un autre utilisateur
+exports.getCommons = function (targetId, userId) {
+  var users = db
+    .prepare(
+      "SELECT name FROM game WHERE  userId =? AND name IN(SELECT name FROM game WHERE userId=?)"
+    )
+    .all(targetId, userId);
+  return users;
+};
+
 //Ajoute une description a la base de donnée
 exports.addDescription = function (desc, userId) {
   db.prepare("DELETE from descriptions WHERE userId=?").run(userId);
