@@ -190,8 +190,14 @@ exports.addDescription = function (desc, userId) {
 
 //Retourne la description d'un utilisateur selon son id
 exports.getDescriptionById = function (userId) {
-  var desc = db
-    .prepare("SELECT desc FROM descriptions WHERE userId=?")
-    .get(userId);
-  return desc.desc;
+  var desc;
+  if (
+    db.prepare("SELECT userId FROM descriptions WHERE userId=?").get(userId) !=
+    undefined
+  ) {
+    desc = db
+      .prepare("SELECT desc FROM descriptions WHERE userId=?")
+      .get(userId).desc;
+  }
+  return desc;
 };

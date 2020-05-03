@@ -271,7 +271,7 @@ app.post("/userSearch", (req, res) => {
     var games = model.getGamesById(userId);
     var image = model.getImageById(userId);
     var favorites = model.getFavById(userId);
-    var desc = model.getDescriptionById(req.session.user);
+    var desc = model.getDescriptionById(userId);
     var hasGame = games.length != 0;
     var hasFav = favorites.length != 0;
     var authenticated = req.session.authenticated;
