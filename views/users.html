@@ -14,7 +14,7 @@
                 {{#sorted}}
                 <h1 class="text-danger">Il y a {{users.length}} utilisateur(s) qui ont des jeux en commun avec vous :
                     <br>
-                {{/sorted}}
+                    {{/sorted}}
         </div>
     </div>
 
@@ -30,6 +30,11 @@
 <div class="row row-cols-1 row-cols-sm-2">
     <div class="col">
         <h2 class="text-danger">{{name}}</h1>
+            <form action="/userSearch" method="POST">
+                <div class="form-group">
+                    <button class="btn btn-secondary" type="submit" value="{{name}}"name="searchName">Voir son Profil</button>
+                </div>
+            </form>
     </div>
     <div class="col">
         <p>
@@ -38,8 +43,8 @@
             <form>
                 <input class="btn btn-primary" value="Ajouter en amis">
             </form>
-
             {{/authenticated}}
+            
         </p>
     </div>
 </div>
