@@ -1,45 +1,47 @@
 {{> header}}
 <div form="text-inline">
-    <h3 class="text-white">Jeu(x) trouvé(s):
-        <h3 class="text-light">{{count}}</h3>
-    </h3>
+    <h1 class="text-white"> Jeu(x) trouvé(s): {{count}}
+    </h1>
 </div>
 <br>
 <br>
-<br> {{#results}}
-<div class="row row-cols-1 row-cols-sm-2">
+<br> 
+<div class="row row-cols-2 row-cols-sm-1">{{#results}}
+    <span class="border border-danger rounded shadow p-3 mb-5 bg-light rounded w-auto" >
+       
     <div class="col">
+        <div class="text-center">
         <h1 class="text-danger">{{name}}</h1>
+        <div class="bg-light clearfix">
         <p>
             {{#authenticated}}
             <form method="POST" action="/ajout/{{id}}/{{name}}">
-                <input class="btn btn-info" type="submit" value="Ajouter à ma liste">
+                <input class="btn btn-success float-right" type="submit" value="Ajouter à ma liste">
             </form>
             {{/authenticated}}
-
         </p>
         <p>
             <form method="GET" action="/gameInfo/{{slug}}">
-                <input class="btn btn-info" type="submit" value="Plus d'informations">
+                <input class="btn btn-primary float-left " type="submit" value="Plus d'informations">
             </form>
-        </p>
-    </div>
-    <div class="col">
-        <img src="{{background_image}}" class="img-fluid" alt="Responsive image">
-    </div>
+        </p></div>
+        <br>
+        <img src="{{background_image}}" class="img-fluid" alt="Responsive image"></div>
+    </div></span>{{/results}}
+</div> 
 </div>
 <br>
-<br> {{/results}}
+<br>
 
-<div class="form-inline justify-content-between">
+<div class="bg-dark clearfix">
     {{#hasPrev}}
-    <form class="form-inline" method="GET" action="/previous">
-        <input class="btn btn-light" type="submit" value="Page précedente">
+    <form  method="GET" action="/previous">
+        <input class="btn btn-secondary float-left" type="submit" value="Page précedente">
     </form>
     {{/hasPrev}}
     {{#hasNext}}
-    <form class="form-inline" method="GET" action="/next">
-        <input class="btn btn-light" type="submit" value="Page suivante">
+    <form  method="GET" action="/next">
+        <input class="btn btn-secondary float-right" type="submit" value="Page suivante">
     </form>
     {{/hasNext}}
 </div>
