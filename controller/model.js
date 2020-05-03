@@ -67,6 +67,24 @@ exports.requestInfoToApi = async function (gameName) {
   return json;
 };
 
+//Requête de jeu similiaire à l'API
+https: exports.requestSuggestedToApi = async function (gameId) {
+  var apiUrl =
+    "https://api.rawg.io/api/games/" + gameId + "/suggested?page_size=25";
+  var repsonse = await fetch(apiUrl);
+  var json = await repsonse.json();
+  return json;
+};
+
+//Requête de jeu populaires à l'API
+exports.requestPopularToApi = async function () {
+  var apiUrl =
+    "https://api.rawg.io/api/games?dates=2020-01-01,2020-12-31&ordering=-added&page_size=25";
+  var repsonse = await fetch(apiUrl);
+  var json = await repsonse.json();
+  return json;
+};
+
 //Ajout Photo
 exports.addPhoto = function (link, userId) {
   //Supprime si jamais on veut la modifier et pas juste ajouter

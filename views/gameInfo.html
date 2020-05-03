@@ -95,12 +95,16 @@
             {{/clip}}
         </p>
 
-        <p>
+        <p><form method="POST" action="/suggestedGames/{{id}}">
+                <input class="btn btn-info" type="submit" value="Jeux similaires">
+            </form>
+            <br>
             {{#authenticated}}
             <form method="POST" action="/ajout/{{id}}/{{name}}">
                 <input class="btn btn-success" type="submit" value="Ajouter à ma liste">
             </form>
             {{/authenticated}}
+            
         </p>
     </div>
     

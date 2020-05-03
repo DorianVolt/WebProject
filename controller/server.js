@@ -315,6 +315,34 @@ app.get("/gameInfo/:slug", async (req, res) => {
   res.render("gameInfo", result);
 });
 
+//Page de jeu (suggérés)
+app.post("/suggestedGames/:gameId", async (req, res) => {
+  var result = await model.requestSuggestedToApi(req.params.gameId);
+  if (result.count == 0) {
+    res.redirect("/");
+  } else {
+    result.authenticated = req.session.authenticated;
+    if (req.session.authenticated) {
+      result.pseudo = model.printProfil(req.session.user);
+    }
+    res.render("game", result);
+  }
+});
+
+//Page de jeu (populaire)
+app.post("/popular", async (req, res) => {
+  var result = await model.requestPopularToApi();
+  if (result.count == 0) {
+    res.redirect("/");
+  } else {
+    result.authenticated = req.session.authenticated;
+    if (req.session.authenticated) {
+      result.pseudo = model.printProfil(req.session.user);
+    }
+    res.render("game", result);
+  }
+});
+
 app.listen(8000, () =>
   console.log("The server is running at http://localhost:8000")
 );

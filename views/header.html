@@ -30,13 +30,11 @@
                         href="/" style="height: 50px; width: 50px;"></img> </button></form>
 
             <div class="form-inline">
-                <form class="form-inline" method="POST" action="/userSearch">
-                    <input id="jeu" class="form-control" placeholder="Utlisateur" name="searchName"> </input>
-                    <button id="submit" class="btn btn-alert">Trouver</button>
-                </form>
                 <form class="form-inline" method="POST" action="/game">
-                    <input id="jeu" class="form-control" placeholder="Jeux" name="research"> </input>
-                    <button id="submit" class="btn btn-alert">Rechercher</button>
+                    <button name="research" id="submit" class="btn btn-primary">Jeux</button>
+                </form>
+                <form class="px-4 py-3" action="/users">
+                    <button type="submit" class="btn btn-primary">Utilisateurs</button>
                 </form>
                 <ul class="navbar-nav mr-auto">
                     <li>
@@ -60,9 +58,7 @@
                                     <button type="submit" class="btn btn-warning">Profil
                                     </button>
                                 </form>
-                                <form class="px-4 py-3" action="/users">
-                                    <button type="submit" class="btn btn-primary">Utilisateurs</button>
-                                </form>
+                    
                                 <form class="px-4 py-3" action="/logout">
                                     <button type="submit" style="margin-top: 12px;"
                                         class="btn btn-danger">Déconnexion</button>
@@ -92,9 +88,7 @@
                                             class="btn btn-primary">Connexion</button>
                                     </form>
                                     <div class="dropdown-divider"></div>
-                                    <form class="px-4 py-3" action="/users">
-                                        <button type="submit" class="btn btn-primary">Utilisateurs</button>
-                                    </form>
+                                    
                                     <a class="dropdown-item" href="/register">Tu es nouveau ? Inscris-toi </a>
                                 </div>
                             </form>{{/authenticated}}
