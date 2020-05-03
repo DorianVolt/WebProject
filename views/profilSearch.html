@@ -21,10 +21,10 @@
     {{/image.link}}
   </div>
 
-  <a class="display-3" style="margin: 0 auto;">{{pseudo}}</a>
+  <a class="display-3" style="margin: 0 auto;">{{username}}</a>
   <p>{{desc}}</p>
   {{#authenticated}}
-  <form action="users">
+  <form action="addFriends/{{username}}" method="POST">
     <div>
       <button type="submit" class="btn btn-primary">Ajouter en amis</button>
     </div>

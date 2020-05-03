@@ -1,0 +1,72 @@
+{{> header}}
+<br>
+<br>
+<div class="row row-cols-1 row-cols-sm-2">
+    <div class="col">
+        <div form="text-inline">
+            <h1 class="text-danger">Amis:
+                <br>
+                <h3 class="text-light">Vous avez {{friends.length}} ami(s).
+                </h3> 
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br><div class="row row-cols-2 row-cols-sm-2">
+{{#friends}}
+    <span class="border border-danger rounded shadow p-3 mb-5 bg-white rounded">
+        <div class="col">
+            <h2 class="text-danger">{{friendName}}</h1>
+                <form action="/userSearch" method="POST">
+                    <div class="form-group">
+                        <br>
+                        <p></p><button class="btn btn-link" type="submit" value="{{friendName}}" name="searchName">Voir son
+                            Profil</button></p>
+                    </div>
+                </form>
+                <form action="/deleteFriends/{{friendName}}" method="POST">
+                    <div class="form-group">
+                        <br>
+                        <p></p><button class="btn btn-warning" type="submit">Supprimer de vos amis</button></p>
+                    </div>
+                </form>
+        </div>
+    </span>
+<br>
+<br>
+{{/friends}}
+</div>
+<br>
+<br>
+<br><div class="row row-cols-2 row-cols-sm-2">
+        <div form="text-inline">
+                <br>
+                <h3 class="text-light">Vous avez {{request.length}} demande(s).
+                </h3> 
+        </div>
+</div>
+<br>
+<br>
+<br><div class="row row-cols-2 row-cols-sm-2">
+{{#request}}
+
+<span class="border border-danger rounded shadow p-3 mb-5 bg-white rounded">
+    <div class="col">
+        <h2 class="text-danger">{{userName}}</h1>
+            <form action="/acceptRequest/{{userName}}" method="GET">
+                <div class="form-group">
+                    <br>
+                    <p></p><button class="btn btn-success" type="submit">Accepter</button></p>
+                </div>
+            </form>
+    </div>
+</span>
+
+<br>
+<br>
+{{/request}}
+</div>
+
+{{> footer}}

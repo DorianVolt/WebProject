@@ -229,3 +229,84 @@ exports.getDescriptionById = function (userId) {
   }
   return desc;
 };
+
+//Ajoute un ami a la liste d'amis de l'utilisateur
+exports.addFriends = function (userId, userName, friendName) {
+  var alreadyRequestFriend = db
+    .prepare("SELECT * FROM friends WHERE id=? AND friendName=?")
+    .all(userId, friendName);
+  if (alreadyRequestFriend.length == 0) {
+    db.prepare(
+      "INSERT INTO friends VALUES(@id,@userName,@friendName,@accepted)"
+    ).run({
+      id: userId,
+      userName: userName,
+      friendName: friendName,
+      accepted: 0,
+    });
+  }
+};
+
+//Retourne tout les amis ayant accepter la demande
+exports.getFriends = function (userId) {
+  var friends = db
+    .prepare("SELECT friendName FROM friends WHERE accepted=1 AND id=?")
+    .all(userId);
+  return friends;
+};
+
+//Retourne toutes les demandes
+exports.getRequest = function (userName) {
+  var requests = db.prepare("SELECT * FROM friends").all();
+  var friends = db
+    .prepare("SELECT userName FROM friends WHERE accepted=0 AND friendName=?")
+    .all(userName);
+  return friends;
+};
+
+//Accepter la demande d'un utilisateur
+exports.acceptRequest = function (userId, friendName, userName) {
+  var friendId = db.prepare("SELECT id from user WHERE name=?").get(friendName)
+    .id;
+  db.prepare(
+    "DELETE  FROM friends WHERE id=@id AND friendName=@friendName"
+  ).run({
+    id: friendId,
+    friendName: userName,
+  });
+  db.prepare(
+    "INSERT INTO friends VALUES (@id,@userName,@friendName,@accepted)"
+  ).run({
+    id: friendId,
+    userName: friendName,
+    friendName: userName,
+    accepted: 1,
+  });
+
+  db.prepare(
+    "INSERT INTO friends VALUES (@id,@userName,@friendName,@accepted)"
+  ).run({
+    id: userId,
+    userName: userName,
+    friendName: friendName,
+    accepted: 1,
+  });
+};
+
+//Supprimer un utilisateur
+exports.deleteFriends = function (userId, friendName, userName) {
+  var friendId = db.prepare("SELECT id from user WHERE name=?").get(friendName)
+    .id;
+  db.prepare(
+    "DELETE  FROM friends WHERE id=@id AND friendName=@friendName"
+  ).run({
+    id: friendId,
+    friendName: userName,
+  });
+  db.prepare(
+    "DELETE  FROM friends WHERE id=@id AND friendName=@friendName"
+  ).run({
+    id: userId,
+    friendName: friendName,
+  });
+};

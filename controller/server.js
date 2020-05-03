@@ -277,8 +277,12 @@ app.post("/userSearch", (req, res) => {
     var hasGame = games.length != 0;
     var hasFav = favorites.length != 0;
     var authenticated = req.session.authenticated;
+    if (req.session.authenticated) {
+      var pseudo = model.printProfil(req.session.user);
+    }
     res.render("profilSearch", {
-      pseudo: name,
+      pseudo: pseudo,
+      username: name,
       games,
       image,
       favorites,
@@ -298,7 +302,53 @@ app.get("/users", (req, res) => {
   var authenticated = req.session.authenticated;
   var sorted = false;
   var isAdmin = req.session.isAdmin;
-  res.render("users", { users, authenticated, sorted, isAdmin });
+  if (req.session.authenticated) {
+    var pseudo = model.printProfil(req.session.user);
+  }
+  res.render("users", {
+    pseudo: pseudo,
+    users,
+    authenticated,
+    sorted,
+    isAdmin,
+  });
+});
+
+//Retourne la page d'amis
+app.post("/addFriends/:friendName", is_authenticated, (req, res) => {
+  var pseudo = model.printProfil(req.session.user);
+  model.addFriends(req.session.user, pseudo, req.params.friendName);
+  var friends = model.getFriends(req.session.user);
+  var authenticated = req.session.authenticated;
+  res.render("friends", { friends, authenticated });
+});
+
+//Retourne la page d'amis
+app.get("/friends", is_authenticated, (req, res) => {
+  var pseudo = model.printProfil(req.session.user);
+  var friends = model.getFriends(req.session.user);
+  var request = model.getRequest(pseudo);
+  var authenticated = req.session.authenticated;
+
+  res.render("friends", { pseudo: pseudo, friends, authenticated, request });
+});
+
+app.get("/acceptRequest/:friendName", is_authenticated, (req, res) => {
+  model.acceptRequest(
+    req.session.user,
+    req.params.friendName,
+    req.session.pseudo
+  );
+  res.redirect("/friends");
+});
+
+app.post("/deleteFriends/:friendName", is_authenticated, (req, res) => {
+  model.deleteFriends(
+    req.session.user,
+    req.params.friendName,
+    req.session.pseudo
+  );
+  res.redirect("/friends");
 });
 
 //Trie les utilisateurs par affinité par rapport a l'utilisateur connecté

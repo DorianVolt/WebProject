@@ -24,9 +24,7 @@
                     {{/sorted}}
         </div>
     </div>
-
     <div class="col">
-
     </div>
 </div>
 <br>
@@ -49,12 +47,10 @@
         <div class="col">
             <p>
                 {{#authenticated}}
-                <form>
-                    <input class="btn btn-primary" value="Ajouter en amis">
+                <form action="addFriends/{{name}}" method="POST">
+                    <input type="submit" class="btn btn-primary" value="Ajouter en amis" >
                 </form>
                 {{/authenticated}}
-
-
             </p>
             <p>
                 {{#isAdmin}}
