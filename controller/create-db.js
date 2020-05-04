@@ -12,7 +12,7 @@ var load = function (filename) {
   // db.prepare("DROP TABLE IF EXISTS game").run();
   // db.prepare("DROP TABLE IF EXISTS profilePictures").run();
   // db.prepare("DROP TABLE IF EXISTS admin").run();
-  db.prepare("DROP TABLE IF EXISTS friends").run();
+  //db.prepare("DROP TABLE IF EXISTS friends").run();
   // // db.prepare("DROP TABLE IF EXISTS descriptions").run();
   // // db.prepare(
   // //   "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT)"
@@ -25,9 +25,9 @@ var load = function (filename) {
   // // db.prepare("CREATE TABLE admin (id INTEGER PRIMARY KEY AUTOINCREMENT)").run();
   // // db.prepare("CREATE TABLE descriptions (userId INTEGER, desc TEXT)").run();
   // // db.prepare("INSERT INTO admin VALUES(@id)").run({ id: 1 });
-  db.prepare(
-    "CREATE TABLE friends (id INTEGER,userName TEXT,friendName TEXT, accepted INTEGER)"
-  ).run();
+  // db.prepare(
+  //   "CREATE TABLE friends (id INTEGER,userName TEXT,friendName TEXT, accepted INTEGER)"
+  // ).run();
 };
 
 load("db.sqlite");

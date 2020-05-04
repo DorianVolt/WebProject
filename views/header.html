@@ -33,9 +33,11 @@
                 <form class="form-inline" method="POST" action="/game">
                     <button name="research" id="submit" class="btn btn-primary">Jeux</button>
                 </form>
+                {{#authenticated}}
                 <form class="px-4 py-3" action="/users">
                     <button type="submit" class="btn btn-primary">Utilisateurs</button>
                 </form>
+                {{/authenticated}}
                 <ul class="navbar-nav mr-auto">
                     <li>
                         <div class="dropdown my-sm">

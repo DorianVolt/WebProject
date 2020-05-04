@@ -23,13 +23,6 @@
 
   <a class="display-3" style="margin: 0 auto;">{{username}}</a>
   <p>{{desc}}</p>
-  {{#authenticated}}
-  <form action="addFriends/{{username}}" method="POST">
-    <div>
-      <button type="submit" class="btn btn-primary">Ajouter en amis</button>
-    </div>
-  </form>
-  {{/authenticated}}
 </div>
 <div class="row row-cols-1 row-cols-sm-3">
   <div class="col">
