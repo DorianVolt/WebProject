@@ -257,7 +257,6 @@ exports.getFriends = function (userId) {
 
 //Retourne toutes les demandes
 exports.getRequest = function (userName) {
-  var requests = db.prepare("SELECT * FROM friends").all();
   var friends = db
     .prepare("SELECT userName FROM friends WHERE accepted=0 AND friendName=?")
     .all(userName);
