@@ -168,8 +168,8 @@ exports.getUserIdByName = function (name) {
 };
 
 //Retourne tout les utilisateurs du site
-exports.getUSERS = function () {
-  var users = db.prepare("SELECT id,name FROM user").all();
+exports.getUSERS = function (userId) {
+  var users = db.prepare("SELECT id,name FROM user WHERE id<>?").all(userId);
   return users;
 };
 

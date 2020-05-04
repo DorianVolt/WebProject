@@ -298,7 +298,7 @@ app.post("/userSearch", (req, res) => {
 
 //Retourne la liste de sutilisateur pour une recherche plus simple
 app.get("/users", (req, res) => {
-  var users = model.getUSERS();
+  var users = model.getUSERS(req.session.user);
   var authenticated = req.session.authenticated;
   var sorted = false;
   var isAdmin = req.session.isAdmin;
