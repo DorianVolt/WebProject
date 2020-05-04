@@ -379,6 +379,7 @@ app.post("/suggestedGames/:gameId", async (req, res) => {
     if (req.session.authenticated) {
       result.pseudo = model.printProfil(req.session.user);
     }
+    result.count = 25;
     res.render("game", result);
   }
 });
@@ -393,6 +394,7 @@ app.post("/popular", async (req, res) => {
     if (req.session.authenticated) {
       result.pseudo = model.printProfil(req.session.user);
     }
+    result.count = 25;
     res.render("game", result);
   }
 });
